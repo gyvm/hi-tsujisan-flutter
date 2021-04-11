@@ -23,7 +23,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_calendar_carousel: ^2.0.0
+  # http: ^0.13.1
+  fluttertoast: ^8.0.3
 
+  # flutter_calendar_carousel:
+  #   git:
+  #     url: https://github.com/gyvm/flutter_calendar_carousel
+  #     # ref: master
+  #     ref: fix-event-model
+
+  # flutter_calendar_carousel:
+  #   path: /Users/yosuke/Documents/flutter_calendar_carouse
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

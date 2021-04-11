@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'calendar.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -35,6 +37,7 @@ class MyHomePage extends StatelessWidget {
             Text(
               'You have pushed the button this many times:',
             ),
+            Calendar(),
           ],
         ),
       ),
