@@ -6,7 +6,7 @@ class H2Text extends StatelessWidget {
     required this.text,
   }) : super(key: key);
 
-  String text;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
