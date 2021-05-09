@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/create_event_screen/event_form.dart';
+import '../widgets/create_event_screen/calendar.dart';
 
 class CreateEventScreen extends StatelessWidget {
   @override
@@ -9,6 +10,7 @@ class CreateEventScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text('👋🐑hi-tsuji-san'),
+          centerTitle: false,
         ),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints viewportConstraints) {
@@ -24,10 +26,7 @@ class CreateEventScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       EventForm(),
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
+                      CalendarPage(),
                       Placeholder(
                         color: Colors.green,
                         fallbackHeight: 500,
