@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/create_event_screen/event_form.dart';
+
 class CreateEventScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,7 @@ class CreateEventScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
+                      EventForm(),
                       Placeholder(
                         color: Colors.green,
                         fallbackHeight: 500,

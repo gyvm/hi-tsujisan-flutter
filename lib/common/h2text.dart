@@ -15,7 +15,7 @@ class H2Text extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 20,
         ),
       ),
     );
