@@ -183,24 +183,36 @@ class _CalendarState extends State<Calendar> {
   }
 
   Widget buildCalendarItem(int i, DateTime cacheDate) {
-    // bool isToday = (selectedDate.difference(cacheDate).inDays == 0) &&
-    //     (selectedDate.day == cacheDate.day);
     bool isSelected = selectedDates.contains(cacheDate);
     if (isSelected) {
       return CircleAvatar(
         radius: 18,
         backgroundColor: (isSelected) ? widget.color : Colors.transparent,
-        child: Container(
-          alignment: Alignment.center,
-          height: widget.itemHeight,
-          child: Text(
-            '$i',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 16.0,
-                color: (isSelected) ? Colors.white : Colors.black,
-                fontWeight: FontWeight.bold),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            alignment: Alignment.center,
+            height: widget.itemHeight,
+            child: Text(
+              '$i',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 16.0,
+                  color: (isSelected) ? Colors.white : Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
+          onTap: () {
+            print('${DateFormat('yyyy年M月d日').format(cacheDate)}が削除されました。');
+            setState(
+              () {
+                selectedDates.forEach((date) {
+                  if (date == cacheDate) selectedDate = cacheDate;
+                });
+                selectedDates.remove(selectedDate);
+              },
+            );
+          },
         ),
       );
     }
