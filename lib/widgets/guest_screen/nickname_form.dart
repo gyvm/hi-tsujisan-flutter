@@ -32,13 +32,17 @@ class NicknameForm extends StatelessWidget {
         color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
-        H2Text(text: 'イベント名を教えて下さい!'),
+        H2Text(text: 'ニックネームを入力してください'),
         Form(
           child: TextFormField(
             maxLength: 30,
+            cursorColor: HexColor('#8A5C46'),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: "イベント名：",
+              // hintText: "",
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
+              ),
             ),
             onChanged: (text) {
               if (text.length > 0) {
@@ -60,14 +64,18 @@ class NicknameForm extends StatelessWidget {
         color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
-        H2Text(text: '詳細情報はありますか？(オプション)'),
+        H2Text(text: 'コメントを入力してください(オプション)'),
         Form(
           child: TextFormField(
             maxLines: 8,
             maxLength: 500,
+            cursorColor: HexColor('#8A5C46'),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: "補足事項：",
+              hintText: "例：○○は20時以降なら可能です。",
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
+              ),
             ),
             onChanged: (text) {
               if (text.length > 0) {

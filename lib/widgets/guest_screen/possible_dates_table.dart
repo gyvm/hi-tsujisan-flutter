@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
 
+import 'package:intl/intl.dart';
+
 class PossibleDatesTable extends StatefulWidget {
   @override
   _PossibleDatesTableState createState() => _PossibleDatesTableState();
@@ -42,6 +44,7 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
           borderRadius: BorderRadius.circular(13),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             H2Text(text: '参加可能日を教えて下さい！'),
             _tableContainer(),
@@ -60,38 +63,21 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
       ),
       child: DataTable(
         showBottomBorder: true,
+        headingRowHeight: 0,
         // headingRowColor:
         //     MaterialStateColor.resolveWith((states) => Colors.blue),
         columns: const <DataColumn>[
           DataColumn(
-            label: Text('候補日'),
+            label: Center(),
           ),
           DataColumn(
-            label: Center(
-              child: Text(
-                '🙆‍♀️',
-                style: TextStyle(fontSize: 30.0),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            label: Center(),
           ),
           DataColumn(
-            label: Center(
-              child: Text(
-                '🤷‍♀️',
-                style: TextStyle(fontSize: 30.0),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            label: Center(),
           ),
           DataColumn(
-            label: Center(
-              child: Text(
-                '🙅‍♀️',
-                style: TextStyle(fontSize: 30.0),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            label: Center(),
           ),
         ],
         rows: List<DataRow>.generate(
@@ -99,10 +85,11 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
           (int index) => DataRow(
             cells: <DataCell>[
               DataCell(Text(
-                possibleDates[index],
-                style: TextStyle(
-                  color: Colors.green,
-                ),
+                // possibleDates[index],
+                // DateFormat('y年M月d日')
+                //     .format(DateTime.parse(possibleDates[index])),
+                DateFormat('M月d日').format(DateTime.parse(possibleDates[index])),
+                style: TextStyle(),
               )),
               DataCell(
                 Center(
