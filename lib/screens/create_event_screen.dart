@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/create_event_screen/event_form.dart';
 import '../widgets/create_event_screen/calendar.dart';
+import '../widgets/create_event_screen/submit_button.dart';
 
 class CreateEventScreen extends StatelessWidget {
   @override
@@ -27,10 +28,7 @@ class CreateEventScreen extends StatelessWidget {
                     children: [
                       EventForm(),
                       CalendarPage(),
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
+                      SubmitButton(),
                       Placeholder(
                         color: Colors.green,
                         fallbackHeight: 500,
