@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/guest_screen/possible_dates_table.dart';
+import '../widgets/guest_screen/nickname_form.dart';
+import '../widgets/guest_screen/submit_button.dart';
+
 class GuestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,22 +26,9 @@ class GuestScreen extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
-                      Placeholder(
-                        color: Colors.green,
-                        fallbackHeight: 500,
-                      ),
+                      NicknameForm(),
+                      PossibleDatesTable(),
+                      SubmitButton(),
                     ],
                   ),
                 ),
