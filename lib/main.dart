@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './screens/create_event_screen.dart';
+import './screens/guest_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return CreateEventScreen();
+    // return CreateEventScreen();
+    return GuestScreen();
   }
 }
