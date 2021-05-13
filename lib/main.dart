@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-// import './screens/create_event_screen.dart';
+import 'package:url_strategy/url_strategy.dart';
+import './screens/create_event_screen.dart';
 import './screens/guest_screen.dart';
 
 void main() {
+  setPathUrlStrategy();
   runApp(MyApp());
 }
 
@@ -11,26 +13,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    // return CreateEventScreen();
-    return GuestScreen();
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        initialRoute: CreateEventScreen.routeName,
+        onGenerateRoute: (settings) {
+          if (settings.name == CreateEventScreen.routeName) {
+            return MaterialPageRoute(builder: (context) => CreateEventScreen());
+          }
+          var uri = Uri.parse(settings.name.toString());
+          if (uri.pathSegments.length == 2 &&
+              uri.pathSegments.first == 'event') {
+            return MaterialPageRoute(
+                builder: (context) => GuestScreen(url: uri.pathSegments[1]));
+          }
+        });
   }
 }
