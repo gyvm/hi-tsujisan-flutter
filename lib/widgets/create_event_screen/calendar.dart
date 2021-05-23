@@ -3,6 +3,9 @@ import 'package:hi_tsujisan_frontend/common/hexcolor.dart';
 import 'package:intl/intl.dart';
 import '../../common/h2text.dart';
 
+import 'package:provider/provider.dart';
+import '../../model/event_model.dart';
+
 class CalendarPage extends StatefulWidget {
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -231,6 +234,8 @@ class _CalendarState extends State<Calendar> {
       onTap: () {
         print('${DateFormat('yyyy年M月d日').format(cacheDate)}が選択されました');
         selectedDate = cacheDate;
+        var event = context.read<EventModel>();
+        event.selectedDates.add(cacheDate);
         setState(() {
           selectedDates.add(cacheDate);
         });

@@ -7,7 +7,7 @@ import '../widgets/guest_screen/submit_button.dart';
 import '../common/hexcolor.dart';
 
 class GuestScreen extends StatelessWidget {
-  static const routeName = '/event';
+  static const routeName = '/guest';
 
   GuestScreen({Key? key, required this.url}) : super(key: key);
 
