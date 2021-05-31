@@ -8,8 +8,12 @@ import "package:intl/intl.dart";
 
 import '../../model/event_model.dart';
 
+// import '../../screens/guest_screen.dart';
+import '../../screens/event_screen.dart';
+
 Future<Event> createEvent(
-    {required String name,
+    {required BuildContext context,
+    required String name,
     required String description,
     required List<dynamic> selectedDates}) async {
   for (int i = 0; i < selectedDates.length; i++) {
@@ -57,6 +61,14 @@ Future<Event> createEvent(
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (context) => GuestScreen(url: "cjaioweca")));
+    // Navigator.pushNamed(
+    //   context,
+    //   EventScreen.routeName,
+    //   arguments: (url: 'aniesuhfwla',
+    //   ),
+    // );
     return Event.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create Event.');
@@ -97,6 +109,7 @@ class _SubmitButtonState extends State<SubmitButton> {
                   onPressed: () {
                     setState(() {
                       _futureEvent = createEvent(
+                          context: context,
                           name: event.eventName,
                           description: event.eventDescription,
                           selectedDates: event.selectedDates);
@@ -107,9 +120,7 @@ class _SubmitButtonState extends State<SubmitButton> {
             : FutureBuilder<Event>(
                 future: _futureEvent,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Text('SUCCESS');
-                  } else if (snapshot.hasError) {
+                  if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
                   return CircularProgressIndicator();
