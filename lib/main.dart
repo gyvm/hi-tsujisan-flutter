@@ -4,6 +4,8 @@ import './screens/create_event_screen.dart';
 import './screens/guest_screen.dart';
 import './screens/event_screen.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+
 void main() {
   setPathUrlStrategy();
   runApp(MyApp());
@@ -17,6 +19,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.kosugiMaruTextTheme(
+            Theme.of(context).textTheme,
+          ),
         ),
         initialRoute: CreateEventScreen.routeName,
         // routes: {
