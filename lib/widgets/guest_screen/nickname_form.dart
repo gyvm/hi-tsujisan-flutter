@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
 
+import 'package:provider/provider.dart';
+import '../../model/guest_model.dart';
+
 class NicknameForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -11,19 +14,19 @@ class NicknameForm extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(32),
-            child: _nicknameContainer(),
+            child: _nicknameContainer(context),
           ),
           Padding(
             padding:
                 const EdgeInsets.only(left: 32, bottom: 0, top: 0, right: 32),
-            child: _commentContainer(),
+            child: _commentContainer(context),
           ),
         ],
       ),
     );
   }
 
-  Widget _nicknameContainer() {
+  Widget _nicknameContainer(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 16, bottom: 8, top: 8, right: 16),
       width: double.infinity,
@@ -46,6 +49,8 @@ class NicknameForm extends StatelessWidget {
             ),
             onChanged: (text) {
               if (text.length > 0) {
+                var guest = context.read<GuestModel>();
+                guest.nickname = text;
               } else {}
             },
           ),
@@ -54,7 +59,7 @@ class NicknameForm extends StatelessWidget {
     );
   }
 
-  Widget _commentContainer() {
+  Widget _commentContainer(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 16, bottom: 8, top: 8, right: 16),
       // constraints: BoxConstraints.tightFor(height: 150),
@@ -79,6 +84,8 @@ class NicknameForm extends StatelessWidget {
             ),
             onChanged: (text) {
               if (text.length > 0) {
+                var guest = context.read<GuestModel>();
+                guest.comment = text;
               } else {}
             },
           ),

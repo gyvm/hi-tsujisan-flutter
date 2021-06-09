@@ -4,29 +4,23 @@ import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
 
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../../model/guest_model.dart';
 
 class PossibleDatesTable extends StatefulWidget {
+  final List<dynamic> possibleDates;
+  PossibleDatesTable({required this.possibleDates});
+
   @override
   _PossibleDatesTableState createState() => _PossibleDatesTableState();
 }
 
 class _PossibleDatesTableState extends State<PossibleDatesTable> {
-  static const List<String> possibleDates = [
-    "2021-04-07 00:00:00.000",
-    "2021-04-13 00:00:00.000",
-    "2021-04-24 00:00:00.000",
-    "2021-04-28 00:00:00.000"
-  ];
+  Map<String, int> markedPossibleDates = {};
+  // persons.forEach((person) => map[person.name] = person.age);
 
-  Map<String, int> markedPossibleDates = {
-    "2021-04-07 00:00:00.000": 1,
-    "2021-04-13 00:00:00.000": 2,
-    "2021-04-24 00:00:00.000": 3,
-    "2021-04-28 00:00:00.000": 1,
-  };
-
-  List<bool> selected =
-      List<bool>.generate(possibleDates.length, (int index) => false);
+  // List<bool> selected =
+  //     List<bool>.generate(widget.possibleDates.length, (int index) => false);
 
   // void _selectbutton(String mapKey, int pickNum) {
   //   markedPossibleDates[mapKey] = pickNum;
@@ -81,14 +75,15 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
           ),
         ],
         rows: List<DataRow>.generate(
-          possibleDates.length,
+          widget.possibleDates.length,
           (int index) => DataRow(
             cells: <DataCell>[
               DataCell(Text(
                 // possibleDates[index],
                 // DateFormat('y年M月d日')
                 //     .format(DateTime.parse(possibleDates[index])),
-                DateFormat('M月d日').format(DateTime.parse(possibleDates[index])),
+                DateFormat('M月d日')
+                    .format(DateTime.parse(widget.possibleDates[index])),
                 style: TextStyle(),
               )),
               DataCell(
@@ -96,16 +91,18 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
                   child: Text(
                     '🙆‍♀️',
                     // style: TextStyle(fontSize: 30.0),
-                    style: (markedPossibleDates[possibleDates[index]] == 1)
-                        ? TextStyle(fontSize: 30.0)
-                        : TextStyle(fontSize: 16.0),
+                    style:
+                        (markedPossibleDates[widget.possibleDates[index]] == 1)
+                            ? TextStyle(fontSize: 30.0)
+                            : TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 onTap: () {
                   setState(() {
-                    markedPossibleDates[possibleDates[index]] = 1;
-                    print(markedPossibleDates);
+                    markedPossibleDates[widget.possibleDates[index]] = 1;
+                    var guest = context.read<GuestModel>();
+                    guest.markedPossibleDates[widget.possibleDates[index]] = 1;
                   });
                   // _selectbutton(arg, 1);
                 },
@@ -114,16 +111,18 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
                 Center(
                   child: Text(
                     '🤷‍♀️',
-                    style: (markedPossibleDates[possibleDates[index]] == 2)
-                        ? TextStyle(fontSize: 30.0)
-                        : TextStyle(fontSize: 16.0),
+                    style:
+                        (markedPossibleDates[widget.possibleDates[index]] == 2)
+                            ? TextStyle(fontSize: 30.0)
+                            : TextStyle(fontSize: 16.0),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 onTap: () {
                   setState(() {
-                    markedPossibleDates[possibleDates[index]] = 2;
-                    print(markedPossibleDates);
+                    markedPossibleDates[widget.possibleDates[index]] = 2;
+                    var guest = context.read<GuestModel>();
+                    guest.markedPossibleDates[widget.possibleDates[index]] = 2;
                   });
                 },
               ),
@@ -131,15 +130,18 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
                 Center(
                   child: Text(
                     '🙅‍♀️',
-                    style: (markedPossibleDates[possibleDates[index]] == 3)
-                        ? TextStyle(fontSize: 30.0)
-                        : TextStyle(fontSize: 16.0),
+                    style:
+                        (markedPossibleDates[widget.possibleDates[index]] == 3)
+                            ? TextStyle(fontSize: 30.0)
+                            : TextStyle(fontSize: 16.0),
                   ),
                 ),
                 onTap: () {
                   setState(() {
-                    markedPossibleDates[possibleDates[index]] = 3;
-                    print(markedPossibleDates);
+                    markedPossibleDates[widget.possibleDates[index]] = 3;
+                    var guest = context.read<GuestModel>();
+                    guest.markedPossibleDates[widget.possibleDates[index]] = 3;
+                    print(guest.markedPossibleDates);
                   });
                 },
               ),
