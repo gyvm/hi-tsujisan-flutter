@@ -1,31 +1,54 @@
+// import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 
 class PossibleDatesTable extends StatelessWidget {
+  PossibleDatesTable({Key? key, required this.possibleDates}) : super(key: key);
+  final List<dynamic> possibleDates;
+
   @override
   Widget build(BuildContext context) {
-    // const List<String> possibleDates = [
-    //   "2021-04-07 00:00:00.000",
-    //   "2021-04-13 00:00:00.000",
-    //   "2021-04-24 00:00:00.000",
-    //   "2021-04-28 00:00:00.000"
-    // ];
-
-    const List<String> possibleDates = [
-      "2021-05-03",
-      "2021-05-10",
-      "2021-05-24"
-    ];
-
     Map<String, int> markedPossibleDates = {
-      "2021-04-07 00:00:00.000": 1,
-      "2021-04-13 00:00:00.000": 2,
-      "2021-04-24 00:00:00.000": 3,
-      "2021-04-28 00:00:00.000": 1,
+      "2021-06-02": 1,
+      "2021-06-09": 0,
+      "2021-06-16": 0,
     };
 
-    List<bool> selected =
-        List<bool>.generate(possibleDates.length, (int index) => false);
+    List<Map<String, dynamic>> guestData = [
+      {
+        "nickname": "dsews",
+        "comment": "xwewcesdvscwec",
+        "possible_dates": {"2021-06-02": 1, "2021-06-09": 1, "2021-06-16": 2},
+      },
+      {
+        "nickname": "dsasdews",
+        "comment": "xwewcescsdvcsdcwec",
+        "possible_dates": {"2021-06-02": 1, "2021-06-09": 2, "2021-06-16": 3},
+      },
+      {
+        "nickname": "dscdews",
+        "comment": "xwewcecweczxecwec",
+        "possible_dates": {"2021-06-02": 1, "2021-06-09": 3, "2021-06-16": 2},
+      },
+      {
+        "nickname": "adsdsews",
+        "comment": "xwewcescs sv rsfvdsdxcecwec",
+        "possible_dates": {"2021-06-02": 1, "2021-06-09": 1, "2021-06-16": 3},
+      }
+    ];
+    // for (var key in markedPossibleDates.keys) {
+    //   print('$key');
+    //   print(markedPossibleDates['$key']);
+    //   List<int>? art = markedPossibleDates['$key'];
+    //   if (art[0] != 0) {
+    //     print(art[0].toString());
+    //   }
+    // }
+
+    // List<bool> selected =
+    //     List<bool>.generate(possibleDates.length, (int index) => false);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -47,99 +70,38 @@ class PossibleDatesTable extends StatelessWidget {
               Icons.circle,
             )),
           ),
-          DataColumn(
-            label: Center(
-                child: Icon(
-              Icons.change_history_outlined,
-            )),
-          ),
-          DataColumn(
-            label: Center(
-                child: Icon(
-              Icons.close_outlined,
-            )),
-          ),
-          // for (var i in text) Text(i.toString())m
-          for (var i in possibleDates)
+          for (int i = 0; i < guestData.length; i++)
             DataColumn(
-              label: Center(
-                  child: Icon(
-                Icons.close_outlined,
-              )),
+              label: Center(child: Text(guestData[i]['nickname'])),
             ),
+          // DataColumn(
+          //   label: Center(child: Text('コメント')),
+          // ),
         ],
 
         rows: [
+          for (var key in markedPossibleDates.keys)
+            DataRow(
+              cells: <DataCell>[
+                DataCell(Text('$key')),
+                (markedPossibleDates['$key'] != null)
+                    ? DataCell(Text(markedPossibleDates['$key'].toString()))
+                    : DataCell(Text('null')),
+                for (int i = 0; i < guestData.length; i++)
+                  DataCell(
+                      Text(guestData[i]['possible_dates']['$key'].toString())),
+              ],
+            ),
           DataRow(
             cells: <DataCell>[
-              DataCell(Text('aaaa')),
-              DataCell(Text('aaaa')),
-              DataCell(Text('aaaa')),
-              DataCell(Text('aaaa')),
-              for (var i in (possibleDates)) DataCell(Text('aaaa')),
+              DataCell(Text('コメント')),
+              DataCell(Text('')),
+              for (int i = 0; i < guestData.length; i++)
+                DataCell(Text(guestData[i]['comment'])),
             ],
           ),
         ],
-
-        // rows: List<DataRow>.generate(
-        //   possibleDates.length,
-        //   (int index) => DataRow(
-        //     cells: <DataCell>[
-        // DataCell(Text(
-        //   // possibleDates[index],
-        //   // DateFormat('y年M月d日')
-        //   //     .format(DateTime.parse(possibleDates[index])),
-        //   DateFormat('M月d日').format(DateTime.parse(possibleDates[index])),
-        //   style: TextStyle(),
-        // )),
-        // DataCell(
-        //   Center(
-        //     child: Text(
-        //       '🙆‍♀️',
-        //       // style: TextStyle(fontSize: 30.0),
-        //       style: (markedPossibleDates[possibleDates[index]] == 1)
-        //           ? TextStyle(fontSize: 30.0)
-        //           : TextStyle(fontSize: 16.0),
-        //       textAlign: TextAlign.center,
-        //     ),
-        //   ),
-        //   onTap: () {
-        //     // _selectbutton(arg, 1);
-        //   },
-        // ),
-        // DataCell(
-        //   Center(
-        //     child: Text(
-        //       '🤷‍♀️',
-        //       style: (markedPossibleDates[possibleDates[index]] == 2)
-        //           ? TextStyle(fontSize: 30.0)
-        //           : TextStyle(fontSize: 16.0),
-        //       textAlign: TextAlign.center,
-        //     ),
-        //   ),
-        //   onTap: () {},
-        // ),
-        // DataCell(
-        //   Center(
-        //     child: Text(
-        //       '🙅‍♀️',
-        //       style: (markedPossibleDates[possibleDates[index]] == 3)
-        //           ? TextStyle(fontSize: 30.0)
-        //           : TextStyle(fontSize: 16.0),
-        //     ),
-        //   ),
-        //   onTap: () {},
-        // ),
-        // ],
-        // selected: selected[index],
-        // onSelectChanged: (bool value) {
-        //   setState(() {
-        //     selected[index] = value;
-        //   });
-        // },
       ),
     );
-    //   ),
-    // );
   }
 }
