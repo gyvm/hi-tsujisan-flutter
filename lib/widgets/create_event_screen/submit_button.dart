@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import "package:intl/intl.dart";
 import 'dart:async';
 import 'dart:convert';
-import "package:intl/intl.dart";
 
+import '../../common/hexcolor.dart';
 import '../../model/event_model.dart';
-
-// import '../../screens/guest_screen.dart';
 import '../../screens/event_screen.dart';
 
 Future<Event> createEvent(
@@ -22,31 +21,6 @@ Future<Event> createEvent(
   }
 
   Map<String, List<dynamic>> possibleDates = {'possible_dates': selectedDates};
-
-  // String description = 'aaaa';
-  // Map<String, List<dynamic>> possibleDates = {
-  //   'possible_dates': [
-  //     "2021-04-25",
-  //     "2021-04-27",
-  //     "2021-04-29",
-  //     "2021-05-02",
-  //     "2021-05-08"
-  //   ]
-  // };
-
-  print(name);
-  print(description);
-  print(possibleDates);
-  print('start encord');
-  print(
-    jsonEncode(<String, dynamic>{
-      "name": name,
-      "description": description,
-      "possible_dates": possibleDates,
-    }),
-  );
-  print('end encord');
-
   final response = await http.post(
     Uri.http('localhost:3000', '/api/v1/events'),
     headers: <String, String>{
@@ -61,14 +35,6 @@ Future<Event> createEvent(
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    // Navigator.push(context,
-    //     MaterialPageRoute(builder: (context) => GuestScreen(url: "cjaioweca")));
-    // Navigator.pushNamed(
-    //   context,
-    //   EventScreen.routeName,
-    //   arguments: (url: 'aniesuhfwla',
-    //   ),
-    // );
     return Event.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create Event.');
@@ -76,15 +42,17 @@ Future<Event> createEvent(
 }
 
 class Event {
-  final String? status;
+  final String status;
   final event;
+  final String url;
 
-  Event({this.status, this.event});
+  Event({required this.status, this.event, required this.url});
 
   factory Event.fromJson(Map<String, dynamic> json) {
     return Event(
       status: json['status'],
       event: json['event'],
+      url: json['url'],
     );
   }
 }
@@ -103,18 +71,37 @@ class _SubmitButtonState extends State<SubmitButton> {
       return Container(
         child: (_futureEvent == null)
             ? Container(
-                child: ElevatedButton(
-                  child: Text('イベント調整を開始する'),
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    setState(() {
-                      _futureEvent = createEvent(
-                          context: context,
-                          name: event.eventName,
-                          description: event.eventDescription,
-                          selectedDates: event.selectedDates);
-                    });
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 30, top: 50),
+                  child: SizedBox(
+                    width: 250,
+                    height: 50,
+                    child: ElevatedButton(
+                      child: Text(
+                        'イベント調整を開始する',
+                        style: TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: HexColor('#F4EFED'),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: HexColor('#8A5C46'),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _futureEvent = createEvent(
+                              context: context,
+                              name: event.eventName,
+                              description: event.eventDescription,
+                              selectedDates: event.selectedDates);
+                        });
+                      },
+                    ),
+                  ),
                 ),
               )
             : FutureBuilder<Event>(
@@ -123,9 +110,22 @@ class _SubmitButtonState extends State<SubmitButton> {
                   if (snapshot.hasError) {
                     return Text("${snapshot.error}");
                   }
+                  // if (snapshot.hasData) {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: (context) =>
+                  //               EventScreen(url: snapshot.data!.url)));
+                  // }
+                  // Navigator.pushNamed(context, '/event', arguments: 'url');
+                  // print(Event.);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EventScreen(url: snapshot.data!.url)));
                   return CircularProgressIndicator();
-                },
-              ),
+                }),
       );
     });
   }

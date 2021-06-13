@@ -21,11 +21,14 @@ class _CalendarPageState extends State<CalendarPage> {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(13),
-          color: HexColor('#F4EFED'),
+          // color: HexColor('#F4EFED'),
         ),
         child: Column(
           children: [
-            H2Text(text: '候補日を選択してください'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: H2Text(text: '候補日を選択してください'),
+            ),
             Calendar(
               itemHeight: 45.0,
               weekDay: 7, // 日曜日から順に表示するように指定
@@ -56,6 +59,7 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   DateTime? selectedDate;
   DateTime now = DateTime.now();
+  DateTime today = DateTime.now();
   int monthDuration = 0;
 
   List<DateTime> selectedDates = [];
@@ -80,32 +84,41 @@ class _CalendarState extends State<Calendar> {
       Container(
         height: widget.itemHeight,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            GestureDetector(
-              child: Icon(
-                Icons.arrow_left,
-                size: widget.itemHeight,
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: GestureDetector(
+                child: Icon(
+                  Icons.chevron_left_outlined,
+                  // size: widget.itemHeight,
+                  size: 30,
+                ),
+                onTap: () {
+                  monthDuration--;
+                  setState(() {});
+                },
               ),
-              onTap: () {
-                monthDuration--;
-                setState(() {});
-              },
             ),
             Text(
               DateFormat('yyyy年M月')
                   .format(DateTime(now.year, now.month + monthDuration, 1)),
-              style: TextStyle(fontSize: 16.0),
+              style: TextStyle(fontSize: 18.0),
             ),
-            GestureDetector(
-              child: Icon(
-                Icons.arrow_right,
-                size: widget.itemHeight,
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: GestureDetector(
+                child: Icon(
+                  Icons.chevron_right_outlined,
+                  // size: widget.itemHeight,
+                  size: 30,
+                ),
+                onTap: () {
+                  monthDuration++;
+                  setState(() {});
+                },
               ),
-              onTap: () {
-                monthDuration++;
-                setState(() {});
-              },
             ),
           ],
         ),
@@ -190,7 +203,7 @@ class _CalendarState extends State<Calendar> {
     if (isSelected) {
       return CircleAvatar(
         radius: 18,
-        backgroundColor: (isSelected) ? widget.color : Colors.transparent,
+        backgroundColor: widget.color,
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           child: Container(
@@ -201,7 +214,7 @@ class _CalendarState extends State<Calendar> {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 16.0,
-                  color: (isSelected) ? Colors.white : Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold),
             ),
           ),
@@ -220,6 +233,9 @@ class _CalendarState extends State<Calendar> {
       );
     }
 
+    int diffDays = cacheDate.difference(today).inDays;
+    bool isBefore = (diffDays < 0);
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -228,18 +244,23 @@ class _CalendarState extends State<Calendar> {
         child: Text(
           '$i',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 14.0),
+          style: TextStyle(
+            fontSize: 14.0,
+            color: (isBefore) ? Colors.grey : Colors.black,
+          ),
         ),
       ),
-      onTap: () {
-        print('${DateFormat('yyyy年M月d日').format(cacheDate)}が選択されました');
-        selectedDate = cacheDate;
-        var event = context.read<EventModel>();
-        event.selectedDates.add(cacheDate);
-        setState(() {
-          selectedDates.add(cacheDate);
-        });
-      },
+      onTap: (isBefore)
+          ? null
+          : () {
+              print('${DateFormat('yyyy年M月d日').format(cacheDate)}が選択されました');
+              selectedDate = cacheDate;
+              var event = context.read<EventModel>();
+              event.selectedDates.add(cacheDate);
+              setState(() {
+                selectedDates.add(cacheDate);
+              });
+            },
     );
   }
 }

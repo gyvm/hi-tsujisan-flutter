@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/create_event_screen/event_form.dart';
 import '../widgets/create_event_screen/calendar.dart';
 import '../widgets/create_event_screen/submit_button.dart';
+import '../widgets/create_event_screen/greeting.dart';
 
 import '../model/event_model.dart';
 import 'package:provider/provider.dart';
@@ -44,28 +45,14 @@ class CreateEventScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         // EventForm(event: event),
-                        Consumer<EventModel>(builder: (context, event, child) {
-                          return ElevatedButton(
-                            child: Text('print event.eventName'),
-                            style: ElevatedButton.styleFrom(),
-                            onPressed: () {
-                              // print('イベント名は' +
-                              //     Provider.of<EventModel>(context,
-                              //             listen: false)
-                              //         .eventName);
-
-                              // var event = context.read<EventModel>();
-                              print('イベント名は' + event.eventName);
-                            },
-                          );
-                        }),
+                        Row(children: [
+                          GreetingText(),
+                          ElevatedButton(
+                              onPressed: () {}, child: Text('button'))
+                        ]),
                         EventForm(),
                         CalendarPage(),
                         SubmitButton(),
-                        Placeholder(
-                          color: Colors.green,
-                          fallbackHeight: 500,
-                        ),
                       ],
                     ),
                   ),

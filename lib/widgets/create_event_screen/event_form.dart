@@ -1,20 +1,13 @@
 // import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../model/event_model.dart';
-
 import '../../common/hexcolor.dart';
 import '../../common/h2text.dart';
 
-import 'package:provider/provider.dart';
-
 class EventForm extends StatelessWidget {
-  // final event = EventModel();
-  // EventForm({Key? key, required this.event}) : super(key: key);
-
-  // var event = EventModel();
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,14 +33,19 @@ class EventForm extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        color: HexColor('#F4EFED'),
+        // color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
-        H2Text(text: 'イベント名を教えて下さい!'),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: H2Text(text: 'イベント名を入力してください'),
+        ),
         Form(
           child: TextFormField(
             maxLength: 30,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
               hintText: "イベント名：",
             ),
@@ -70,15 +68,20 @@ class EventForm extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        color: HexColor('#F4EFED'),
+        // color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
-        H2Text(text: '詳細情報はありますか？(オプション)'),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: H2Text(text: '詳細情報を入力してください(オプション)'),
+        ),
         Form(
           child: TextFormField(
             maxLines: 8,
             maxLength: 500,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
               hintText: "補足事項：",
             ),
