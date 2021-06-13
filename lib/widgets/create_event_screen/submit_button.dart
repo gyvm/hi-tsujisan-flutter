@@ -10,7 +10,7 @@ import '../../common/hexcolor.dart';
 import '../../model/event_model.dart';
 import '../../screens/event_screen.dart';
 
-Future<Event> createEvent(
+createEvent(
     {required BuildContext context,
     required String name,
     required String description,
@@ -35,7 +35,11 @@ Future<Event> createEvent(
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    return Event.fromJson(jsonDecode(response.body));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EventScreen(
+                url: Event.fromJson(jsonDecode(response.body)).url)));
   } else {
     throw Exception('Failed to create Event.');
   }
@@ -63,70 +67,72 @@ class SubmitButton extends StatefulWidget {
 }
 
 class _SubmitButtonState extends State<SubmitButton> {
-  Future<Event>? _futureEvent;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<EventModel>(builder: (context, event, child) {
       return Container(
-        child: (_futureEvent == null)
-            ? Container(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 30, top: 50),
-                  child: SizedBox(
-                    width: 250,
-                    height: 50,
-                    child: ElevatedButton(
-                      child: Text(
-                        'イベント調整を開始する',
-                        style: TextStyle(
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: HexColor('#F4EFED'),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        primary: HexColor('#8A5C46'),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _futureEvent = createEvent(
-                              context: context,
-                              name: event.eventName,
-                              description: event.eventDescription,
-                              selectedDates: event.selectedDates);
-                        });
-                      },
-                    ),
-                  ),
+          child: Container(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 30, top: 50),
+          child: SizedBox(
+            width: 250,
+            height: 50,
+            child: ElevatedButton(
+              child: Text(
+                'イベント調整を開始する',
+                style: TextStyle(
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: HexColor('#F4EFED'),
                 ),
-              )
-            : FutureBuilder<Event>(
-                future: _futureEvent,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  // if (snapshot.hasData) {
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) =>
-                  //               EventScreen(url: snapshot.data!.url)));
-                  // }
-                  // Navigator.pushNamed(context, '/event', arguments: 'url');
-                  // print(Event.);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              EventScreen(url: snapshot.data!.url)));
-                  return CircularProgressIndicator();
-                }),
-      );
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                primary: HexColor('#8A5C46'),
+              ),
+              onPressed: () {
+                createEvent(
+                    context: context,
+                    name: event.eventName,
+                    description: event.eventDescription,
+                    selectedDates: event.selectedDates);
+                // setState(() {
+                //   _futureEvent = createEvent(
+                //       context: context,
+                //       name: event.eventName,
+                //       description: event.eventDescription,
+                //       selectedDates: event.selectedDates);
+                // });
+              },
+            ),
+          ),
+        ),
+      )
+          // : FutureBuilder<Event>(
+          //     future: _futureEvent,
+          //     builder: (context, snapshot) {
+          //       if (snapshot.hasError) {
+          //         return Text("${snapshot.error}");
+          //       }
+          //       // if (snapshot.hasData) {
+          //       //   Navigator.push(
+          //       //       context,
+          //       //       MaterialPageRoute(
+          //       //           builder: (context) =>
+          //       //               EventScreen(url: snapshot.data!.url)));
+          //       // }
+          //       // Navigator.pushNamed(context, '/event', arguments: 'url');
+          //       // print(Event.);
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (context) =>
+          //                   EventScreen(url: snapshot.data!.url)));
+          //       return CircularProgressIndicator();
+          //     }),
+          );
     });
   }
 }

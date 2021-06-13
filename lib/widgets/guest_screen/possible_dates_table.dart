@@ -34,13 +34,15 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
       child: Container(
         padding: EdgeInsets.only(left: 16, bottom: 8, top: 8, right: 16),
         decoration: BoxDecoration(
-          color: HexColor('#F4EFED'),
           borderRadius: BorderRadius.circular(13),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            H2Text(text: '参加可能日を教えて下さい！'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: H2Text(text: '参加可能日を教えて下さい！'),
+            ),
             _tableContainer(),
           ],
         ),
@@ -51,7 +53,7 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
   Widget _tableContainer() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.transparent,
+        color: HexColor('#F4EFED'),
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(5),
       ),
@@ -88,14 +90,14 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
               )),
               DataCell(
                 Center(
-                  child: Text(
-                    '🙆‍♀️',
-                    // style: TextStyle(fontSize: 30.0),
-                    style:
+                  child: Icon(
+                    Icons.thumb_up_outlined,
+                    color:
                         (markedPossibleDates[widget.possibleDates[index]] == 1)
-                            ? TextStyle(fontSize: 30.0)
-                            : TextStyle(fontSize: 16.0),
-                    textAlign: TextAlign.center,
+                            ? HexColor('#8A5C46')
+                            : Colors.grey,
+                    size: 28.0,
+                    semanticLabel: '参加可能',
                   ),
                 ),
                 onTap: () {
@@ -109,13 +111,14 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
               ),
               DataCell(
                 Center(
-                  child: Text(
-                    '🤷‍♀️',
-                    style:
+                  child: Icon(
+                    Icons.sentiment_neutral_outlined,
+                    color:
                         (markedPossibleDates[widget.possibleDates[index]] == 2)
-                            ? TextStyle(fontSize: 30.0)
-                            : TextStyle(fontSize: 16.0),
-                    textAlign: TextAlign.center,
+                            ? HexColor('#8A5C46')
+                            : Colors.grey,
+                    size: 28.0,
+                    semanticLabel: '考え中',
                   ),
                 ),
                 onTap: () {
@@ -128,12 +131,14 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
               ),
               DataCell(
                 Center(
-                  child: Text(
-                    '🙅‍♀️',
-                    style:
+                  child: Icon(
+                    Icons.thumb_down_outlined,
+                    color:
                         (markedPossibleDates[widget.possibleDates[index]] == 3)
-                            ? TextStyle(fontSize: 30.0)
-                            : TextStyle(fontSize: 16.0),
+                            ? HexColor('#8A5C46')
+                            : Colors.grey,
+                    size: 28.0,
+                    semanticLabel: '参加できない',
                   ),
                 ),
                 onTap: () {

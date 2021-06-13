@@ -32,20 +32,21 @@ class NicknameForm extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        color: HexColor('#F4EFED'),
+        // color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
-        H2Text(text: 'ニックネームを入力してください'),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: H2Text(text: 'ニックネームを入力してください'),
+        ),
         Form(
           child: TextFormField(
             maxLength: 30,
-            cursorColor: HexColor('#8A5C46'),
             decoration: InputDecoration(
+              filled: true,
+              fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
-              // hintText: "",
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
-              ),
+              hintText: "",
             ),
             onChanged: (text) {
               if (text.length > 0) {
@@ -66,21 +67,22 @@ class NicknameForm extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        color: HexColor('#F4EFED'),
+        // color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
-        H2Text(text: 'コメントを入力してください(オプション)'),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: H2Text(text: 'コメントを入力してください(オプション)'),
+        ),
         Form(
           child: TextFormField(
             maxLines: 8,
             maxLength: 500,
-            cursorColor: HexColor('#8A5C46'),
             decoration: InputDecoration(
+              filled: true,
+              fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
               hintText: "例：○○は20時以降なら可能です。",
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
-              ),
             ),
             onChanged: (text) {
               if (text.length > 0) {

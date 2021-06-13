@@ -20,7 +20,8 @@ class EventData {
   String? description;
   List<dynamic> possibleDates;
 
-  EventData({this.name = 'a', this.description, required this.possibleDates});
+  EventData(
+      {required this.name, this.description, required this.possibleDates});
 
   factory EventData.fromJson(Map<String, dynamic> json) {
     return EventData(
@@ -111,16 +112,11 @@ class _GuestScreenState extends State<GuestScreen> {
                               create: (context) => GuestModel(),
                               child: Column(
                                 children: [
-                                  // Text(snapshot.data),
-                                  (a != null) ? Text(a.name) : Text('error'),
+                                  Text(a!.name),
                                   Text(widget.url),
                                   NicknameForm(),
-                                  (a != null)
-                                      ? (a.possibleDates != null)
-                                          ? PossibleDatesTable(
-                                              possibleDates: a.possibleDates)
-                                          : Text('error')
-                                      : Text('error'),
+                                  PossibleDatesTable(
+                                      possibleDates: a.possibleDates),
                                   GuestsSubmitButton(url: widget.url),
                                 ],
                               ),
