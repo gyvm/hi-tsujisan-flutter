@@ -46,8 +46,12 @@ class NicknameForm extends StatelessWidget {
               filled: true,
               fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
+              ),
               hintText: "",
             ),
+            cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
               if (text.length > 0) {
                 var guest = context.read<GuestModel>();
@@ -82,8 +86,12 @@ class NicknameForm extends StatelessWidget {
               filled: true,
               fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
+              ),
               hintText: "例：○○は20時以降なら可能です。",
             ),
+            cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
               if (text.length > 0) {
                 var guest = context.read<GuestModel>();

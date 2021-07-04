@@ -9,7 +9,9 @@ import '../../model/guest_model.dart';
 
 class PossibleDatesTable extends StatefulWidget {
   final List<dynamic> possibleDates;
-  PossibleDatesTable({required this.possibleDates});
+  PossibleDatesTable({
+    required this.possibleDates,
+  });
 
   @override
   _PossibleDatesTableState createState() => _PossibleDatesTableState();

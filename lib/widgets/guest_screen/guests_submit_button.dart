@@ -6,22 +6,15 @@ import 'dart:convert';
 
 import 'package:provider/provider.dart';
 import '../../model/guest_model.dart';
+import '../../common/hexcolor.dart';
+import '../../screens/event_screen.dart';
 
-Future<Event> submitPossibleDates(
+submitPossibleDates(
     {required BuildContext context,
     required String url,
     required String nickname,
     required String comment,
     required Map<String, int> markedPossibleDates}) async {
-  print(
-    jsonEncode(<String, dynamic>{
-      "url": url,
-      "nickname": nickname,
-      "comment": comment,
-      "possible_dates": markedPossibleDates,
-    }),
-  );
-
   final response = await http.post(
     Uri.http('localhost:3000', '/api/v1/guests'),
     headers: <String, String>{
@@ -37,7 +30,10 @@ Future<Event> submitPossibleDates(
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    return Event.fromJson(jsonDecode(response.body));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => EventScreen(url: url)));
+    // final pagePath = '/event' + url.toString();
+    // Navigator.pushNamed(context, pagePath);
   } else {
     throw Exception('Failed to create Event.');
   }
@@ -66,38 +62,34 @@ class GuestsSubmitButton extends StatefulWidget {
 }
 
 class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
-  Future<Event>? _futureEvent;
-
   @override
   Widget build(BuildContext context) {
     return Consumer<GuestModel>(builder: (context, guest, child) {
       return Container(
-        child: (_futureEvent == null)
-            ? Container(
-                child: ElevatedButton(
-                  child: Text('送信'),
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    _futureEvent = submitPossibleDates(
-                        context: context,
-                        url: widget.url,
-                        nickname: guest.nickname,
-                        comment: guest.comment,
-                        markedPossibleDates: guest.markedPossibleDates);
-                  },
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 30, top: 50),
+          child: SizedBox(
+            width: 250,
+            height: 50,
+            child: ElevatedButton(
+              child: Text('送信'),
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              )
-            : FutureBuilder<Event>(
-                future: _futureEvent,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Text('SUCCESS');
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return CircularProgressIndicator();
-                },
+                primary: HexColor('#8A5C46'),
               ),
+              onPressed: () {
+                submitPossibleDates(
+                    context: context,
+                    url: widget.url,
+                    nickname: guest.nickname,
+                    comment: guest.comment,
+                    markedPossibleDates: guest.markedPossibleDates);
+              },
+            ),
+          ),
+        ),
       );
     });
   }

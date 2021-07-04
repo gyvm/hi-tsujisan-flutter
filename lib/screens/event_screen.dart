@@ -4,6 +4,8 @@ import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.d
 
 import '../common/hexcolor.dart';
 
+import '../common/h2text.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -13,15 +15,20 @@ class EventData {
   String name;
   String? description;
   List<dynamic> possibleDates;
+  List<dynamic>? guestData;
 
   EventData(
-      {required this.name, this.description, required this.possibleDates});
+      {required this.name,
+      this.description,
+      required this.possibleDates,
+      this.guestData});
 
   factory EventData.fromJson(Map<String, dynamic> json) {
     return EventData(
       name: json['event_data']['name'],
       description: json['event_data']['description'],
       possibleDates: json['event_data']['possible_dates']['possible_dates'],
+      guestData: json['guests_data'],
     );
   }
 }
@@ -70,9 +77,11 @@ class _EventScreenState extends State<EventScreen> {
               if (snapshot.hasError) {
                 return Text("${snapshot.error}");
               }
-              var a = snapshot.data;
-              if (a != null) {
-                print(a.possibleDates);
+              var data = snapshot.data;
+              if (data != null) {
+                // print(data.name);
+                // print(data.description);
+                // print(data.possibleDates);
                 // var guest = context.read<GuestModel>();
                 // guest.url = widget.url;
               }
@@ -97,17 +106,26 @@ class _EventScreenState extends State<EventScreen> {
                               maxWidth: 720,
                               maxHeight: double.infinity,
                             ),
-                            child: Column(
-                              children: [
-                                //説明文を記載する
-                                //button: 出家席を入力する
-                                Text(widget.url),
-                                // Text(args.url),
-                                EventInfo(),
-                                if (a != null)
-                                  PossibleDatesTable(
-                                      possibleDates: a.possibleDates),
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 32, bottom: 0, top: 0, right: 32),
+                              child: Column(
+                                children: [
+                                  // Text(widget.url),
+                                  if (data != null)
+                                    EventInfo(
+                                        eventName: data.name,
+                                        eventDescription: data.description),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: H2Text(text: '出欠表'),
+                                  ),
+                                  if (data != null)
+                                    PossibleDatesTable(
+                                        possibleDates: data.possibleDates,
+                                        guestData: data.guestData),
+                                ],
+                              ),
                             ),
                           ),
                         ),

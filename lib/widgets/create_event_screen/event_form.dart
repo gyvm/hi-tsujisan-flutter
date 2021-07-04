@@ -47,8 +47,12 @@ class EventForm extends StatelessWidget {
               filled: true,
               fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
+              ),
               hintText: "イベント名：",
             ),
+            cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
               if (text.length > 0) {
                 var event = context.read<EventModel>();
@@ -83,8 +87,12 @@ class EventForm extends StatelessWidget {
               filled: true,
               fillColor: HexColor('#F4EFED'),
               border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
+              ),
               hintText: "補足事項：",
             ),
+            cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
               if (text.length > 0) {
                 var event = context.read<EventModel>();
