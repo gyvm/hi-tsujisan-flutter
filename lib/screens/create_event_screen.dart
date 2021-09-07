@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/create_event_screen/event_form.dart';
-import '../widgets/create_event_screen/calendar.dart';
-import '../widgets/create_event_screen/submit_button.dart';
-import '../widgets/create_event_screen/greeting.dart';
-
-import '../model/event_model.dart';
 import 'package:provider/provider.dart';
 
 import '../common/hexcolor.dart';
+import '../model/event_model.dart';
+import '../widgets/create_event_screen/event_info_form.dart';
+import '../widgets/create_event_screen/calendar.dart';
+import '../widgets/create_event_screen/submit_button.dart';
+import '../widgets/create_event_screen/onboarding.dart';
 
 class CreateEventScreen extends StatelessWidget {
   static const routeName = '/new';
-
-  // final event = EventModel();
 
   @override
   Widget build(BuildContext context) {
@@ -32,26 +28,22 @@ class CreateEventScreen extends StatelessWidget {
               child: Center(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    // minWidth: 640,
-                    // minHeight: 0,
+                    minWidth: 640,
+                    minHeight: 0,
                     maxWidth: 720,
                     maxHeight: double.infinity,
                   ),
                   child: ChangeNotifierProvider(
                     create: (context) => EventModel(),
-                    // update: (context, event) {
-                    //   return event.eventName;s
-                    // },
                     child: Column(
                       children: [
-                        // EventForm(event: event),
                         Row(children: [
-                          GreetingText(),
+                          Onboarding(),
                           ElevatedButton(
                               onPressed: () {}, child: Text('button'))
                         ]),
-                        EventForm(),
-                        CalendarPage(),
+                        EventInfoForm(),
+                        CalendarContainer(),
                         SubmitButton(),
                       ],
                     ),

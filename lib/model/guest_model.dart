@@ -4,6 +4,6 @@ class GuestModel extends ChangeNotifier {
   String url = '';
   String nickname = '';
   String comment = '';
-  Map<String, int> possibleDates = {};
+  List<Map<String, dynamic>> possibleDates = [{}];
   Map<String, int> markedPossibleDates = {};
 }

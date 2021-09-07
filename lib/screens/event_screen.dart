@@ -16,20 +16,25 @@ class EventData {
   String? description;
   List<dynamic> possibleDates;
   List<dynamic>? guestData;
+  List<dynamic>? guestPossibleDates;
+  Map<dynamic, dynamic>? dateRate;
 
   EventData(
       {required this.name,
       this.description,
       required this.possibleDates,
-      this.guestData});
+      this.guestData,
+      this.guestPossibleDates,
+      this.dateRate});
 
   factory EventData.fromJson(Map<String, dynamic> json) {
     return EventData(
-      name: json['event_data']['name'],
-      description: json['event_data']['description'],
-      possibleDates: json['event_data']['possible_dates']['possible_dates'],
-      guestData: json['guests_data'],
-    );
+        name: json['event_info']['name'],
+        description: json['event_info']['description'],
+        possibleDates: json['possible_dates'],
+        guestData: json['guests_data'],
+        guestPossibleDates: json['guest_possible_dates'],
+        dateRate: json['date_rate']);
   }
 }
 
@@ -79,8 +84,10 @@ class _EventScreenState extends State<EventScreen> {
               }
               var data = snapshot.data;
               if (data != null) {
-                // print(data.name);
-                // print(data.description);
+                print(data.name);
+                print(data.description);
+                print(data.guestData);
+                print(data.guestPossibleDates);
                 // print(data.possibleDates);
                 // var guest = context.read<GuestModel>();
                 // guest.url = widget.url;
@@ -114,6 +121,7 @@ class _EventScreenState extends State<EventScreen> {
                                   // Text(widget.url),
                                   if (data != null)
                                     EventInfo(
+                                        url: widget.url,
                                         eventName: data.name,
                                         eventDescription: data.description),
                                   Padding(
@@ -123,7 +131,10 @@ class _EventScreenState extends State<EventScreen> {
                                   if (data != null)
                                     PossibleDatesTable(
                                         possibleDates: data.possibleDates,
-                                        guestData: data.guestData),
+                                        guestData: data.guestData,
+                                        guestPossibleDates:
+                                            data.guestPossibleDates,
+                                        dateRate: data.dateRate),
                                 ],
                               ),
                             ),

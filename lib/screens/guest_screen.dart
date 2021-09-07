@@ -18,16 +18,18 @@ import '../model/guest_model.dart';
 class EventData {
   String name;
   String? description;
+  // List<dynamic> possibleDates;
   List<dynamic> possibleDates;
 
   EventData(
       {required this.name, this.description, required this.possibleDates});
 
   factory EventData.fromJson(Map<String, dynamic> json) {
+    print(json['possible_dates']);
     return EventData(
-      name: json['event_data']['name'],
-      description: json['event_data']['description'],
-      possibleDates: json['event_data']['possible_dates']['possible_dates'],
+      name: json['event_info']['name'],
+      description: json['event_info']['description'],
+      possibleDates: json['possible_dates'],
     );
   }
 }
@@ -39,7 +41,6 @@ Future<EventData> getEvent(
   final response = await http.get(Uri.parse(requestUrl));
 
   if (response.statusCode == 200) {
-    // print(jsonDecode(response.body));
     return EventData.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to create Event.');
@@ -81,6 +82,7 @@ class _GuestScreenState extends State<GuestScreen> {
               }
               var a = snapshot.data;
               if (a != null) {
+                print('a.possibleDates');
                 print(a.possibleDates);
                 // var guest = context.read<GuestModel>();
                 // guest.url = widget.url;

@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/event_model.dart';
 import '../../common/hexcolor.dart';
 import '../../common/h2text.dart';
+import '../../model/event_model.dart';
 
-class EventForm extends StatelessWidget {
+class EventInfoForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +33,6 @@ class EventForm extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(13),
-        // color: HexColor('#F4EFED'),
       ),
       child: Column(children: [
         Padding(

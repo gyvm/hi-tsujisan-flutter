@@ -5,16 +5,19 @@ import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
 
 class EventInfo extends StatelessWidget {
+  final String url;
   final String eventName;
   final String? eventDescription;
 
   EventInfo({
+    required this.url,
     this.eventName = '未入力',
     this.eventDescription = 'a',
   }) : super();
 
   @override
   Widget build(BuildContext context) {
+    String sharedUrl = 'hi-tsujisan.com/' + url;
     return Container(
         child: Column(
       children: [
@@ -35,7 +38,7 @@ class EventInfo extends StatelessWidget {
                 ),
                 //https://stackoverflow.com/questions/55885433/flutter-dart-how-to-add-copy-to-clipboard-on-tap-to-a-app
                 Text(
-                  'hi-tsujisan.com/dsniufhq2839wojecnlkasndckunsozldn',
+                  sharedUrl,
                   style: TextStyle(fontSize: 18),
                 ),
               ]),

@@ -28,6 +28,7 @@ submitPossibleDates(
     }),
   );
 
+  print(response.statusCode);
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
     Navigator.push(context,
@@ -35,7 +36,7 @@ submitPossibleDates(
     // final pagePath = '/event' + url.toString();
     // Navigator.pushNamed(context, pagePath);
   } else {
-    throw Exception('Failed to create Event.');
+    throw Exception('Failed to add guestdata.');
   }
 }
 

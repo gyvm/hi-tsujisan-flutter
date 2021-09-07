@@ -5,19 +5,32 @@ import '../../common/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 class PossibleDatesTable extends StatelessWidget {
-  PossibleDatesTable({Key? key, required this.possibleDates, this.guestData})
+  PossibleDatesTable(
+      {Key? key,
+      required this.possibleDates,
+      this.guestData,
+      this.guestPossibleDates,
+      this.dateRate})
       : super(key: key);
   final List<dynamic> possibleDates;
   final List<dynamic>? guestData;
+  final List<dynamic>? guestPossibleDates;
+  final Map<dynamic, dynamic>? dateRate;
   // List<Map<String, dynamic>>? guestData;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, int> markedPossibleDates = {
-      "2021-06-02": 1,
-      "2021-06-09": 0,
-      "2021-06-16": 0,
-    };
+    // Map<String, int> markedPossibleDates = {
+    //   "2021-06-02": 1,
+    //   "2021-06-09": 0,
+    //   "2021-06-16": 0,
+    // };
+
+    // guest[{id:1,possibletable:[{},{}]}]
+    // guest[i][possibletable][1]
+
+    print(possibleDates);
+    print(guestData);
 
     // List<Map<String, dynamic>> guestData = [
     //   {
@@ -76,6 +89,7 @@ class PossibleDatesTable extends StatelessWidget {
             headingRowColor: MaterialStateColor.resolveWith(
               (states) => HexColor('#EFE2DB'),
             ),
+            // 横の項目名
             columns: <DataColumn>[
               DataColumn(
                 label: Center(child: Container(width: 50, child: Text('日にち'))),
@@ -93,28 +107,28 @@ class PossibleDatesTable extends StatelessWidget {
                   ),
                 ),
               ),
-              // for (int i = 0; i < guestData!.length; i++)
-              //   DataColumn(
-              //     label: Container(
-              //         width: 68,
-              //         child: Center(child: Text(guestData![i]['nickname']))),
-              //   ),
-              DataColumn(
-                label: Container(
-                    width: 68, child: Center(child: Text('testtest'))),
-              ),
-              DataColumn(
-                label: Container(
-                    width: 68, child: Center(child: Text('testtest'))),
-              ),
-              DataColumn(
-                label: Container(
-                    width: 68, child: Center(child: Text('testtest'))),
-              ),
-              DataColumn(
-                label: Container(
-                    width: 68, child: Center(child: Text('testtest'))),
-              ),
+              for (int i = 0; i < guestData!.length; i++)
+                DataColumn(
+                  label: Container(
+                      width: 68,
+                      child: Center(child: Text(guestData![i]['nickname']))),
+                ),
+              // DataColumn(
+              //   label: Container(
+              //       width: 68, child: Center(child: Text('testtest'))),
+              // ),
+              // DataColumn(
+              //   label: Container(
+              //       width: 68, child: Center(child: Text('testtest'))),
+              // ),
+              // DataColumn(
+              //   label: Container(
+              //       width: 68, child: Center(child: Text('testtest'))),
+              // ),
+              // DataColumn(
+              //   label: Container(
+              //       width: 68, child: Center(child: Text('testtest'))),
+              // ),
 
               // DataColumn(
               //   label: Center(child: Text('コメント')),
@@ -122,66 +136,43 @@ class PossibleDatesTable extends StatelessWidget {
             ],
 
             rows: [
-              for (var key in markedPossibleDates.keys)
+              for (int i = 0; i < possibleDates.length; i++)
                 DataRow(
                   cells: <DataCell>[
+                    // 日付を表示
                     DataCell(
                       Text(
-                        DateFormat('M月d日').format(DateTime.parse('$key')),
+                        DateFormat('M月d日').format(
+                          DateTime.parse(possibleDates[i]["date"]),
+                        ),
                       ),
                     ),
-                    (markedPossibleDates['$key'] != null)
+                    // 参加可能人数
+                    (dateRate!.containsKey(possibleDates[i]["id"]))
                         ? DataCell(Center(
                             child: Text(
-                              markedPossibleDates['$key'].toString() + '人',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              dateRate![possibleDates[i]["id"]].toString() +
+                                  '人',
+                              // style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ))
-                        : DataCell(Text('null')),
-                    // for (int i = 0; i < guestData!.length; i++)
-                    //   // DataCell(Text(
-                    //   //     guestData[i]['possible_dates']['$key'].toString())),
-                    //   DataCell(
-                    //     Center(
-                    //       child: _switchIcon(guestData![i]['possible_dates']
-                    //               ['$key']
-                    //           .toString()),
-                    //     ),
-                    //   ),
-                    DataCell(
-                      Container(child: Text('bbbbbbbb')),
-                    ),
-                    DataCell(
-                      Container(child: Text('bbbbbbbb')),
-                    ),
-                    DataCell(
-                      Container(child: Text('bbbbbbbb')),
-                    ),
+                        : DataCell(Text('0人')),
+                    // _getGuestStatus(i),
                     DataCell(
                       Container(child: Text('bbbbbbbb')),
                     ),
                   ],
                 ),
+              // 参加者ごとのコメント
               DataRow(
                 cells: <DataCell>[
                   DataCell(Text('コメント')),
                   DataCell(Text('')),
-                  //     for (int i = 0; i < guestData!.length; i++)
-                  //       DataCell(Container(
-                  //           width: 68, child: Text(guestData![i]['comment'])),
-                  // ),
-                  DataCell(
-                    Container(child: Text('bbbbbbbb')),
-                  ),
-                  DataCell(
-                    Container(child: Text('bbbbbbbb')),
-                  ),
-                  DataCell(
-                    Container(child: Text('bbbbbbbb')),
-                  ),
-                  DataCell(
-                    Container(child: Text('bbbbbbbb')),
-                  ),
+                  for (int i = 0; i < guestData!.length; i++)
+                    DataCell(
+                      Container(
+                          width: 68, child: Text(guestData![i]['comment'])),
+                    ),
                 ],
               ),
             ],
@@ -195,6 +186,30 @@ class PossibleDatesTable extends StatelessWidget {
   //   color: Colors.black,
   //   thickness: 1,
   // );
+
+  DataCell _getGuestStatus(i) {
+    return DataCell(
+      Container(child: Text('bbbbbbbb')),
+    );
+    // List<Widget> list;
+    // for (int j = 0; j < guestData!.length; j++)
+    //                   // DataCell(Text(
+    //                   //     guestData[i]['possible_dates']['$key'].toString())),
+    //                   for (int k = 0; k < guestPossibleDates!.length; k++)
+    //                     (guestData![j]["id"] ==
+    //                             guestPossibleDates![k]["guest_id"])
+    //                         ? (possibleDates![i]["id"] ==
+    //                                 guestPossibleDates![k]["date"])
+    //                             ? DataCell(
+    //                                 Center(
+    //                                   child: _switchIcon(guestPossibleDates![k]
+    //                                           ['status']
+    //                                       .toString()),
+    //                                 ),
+    //                               )
+    //                             : continue;
+    //                         : continue;
+  }
 
   Widget _switchIcon(value) {
     switch (value) {

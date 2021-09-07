@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hi_tsujisan_frontend/common/hexcolor.dart';
-import 'package:intl/intl.dart';
-import '../../common/h2text.dart';
-
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+
+import '../../common/h2text.dart';
+import '../../common/hexcolor.dart';
 import '../../model/event_model.dart';
 
-class CalendarPage extends StatefulWidget {
+class CalendarContainer extends StatefulWidget {
   @override
-  _CalendarPageState createState() => _CalendarPageState();
+  _CalendarContainerState createState() => _CalendarContainerState();
 }
 
-class _CalendarPageState extends State<CalendarPage> {
+class _CalendarContainerState extends State<CalendarContainer> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,7 +62,7 @@ class _CalendarState extends State<Calendar> {
   DateTime today = DateTime.now();
   int monthDuration = 0;
 
-  List<DateTime> selectedDates = [];
+  List<DateTime> selectedDatesListForView = [];
 
   @override
   void initState() {
@@ -199,7 +199,7 @@ class _CalendarState extends State<Calendar> {
   }
 
   Widget buildCalendarItem(int i, DateTime cacheDate) {
-    bool isSelected = selectedDates.contains(cacheDate);
+    bool isSelected = selectedDatesListForView.contains(cacheDate);
     if (isSelected) {
       return CircleAvatar(
         radius: 18,
@@ -219,15 +219,17 @@ class _CalendarState extends State<Calendar> {
             ),
           ),
           onTap: () {
-            print('${DateFormat('yyyy年M月d日').format(cacheDate)}が削除されました。');
+            // print('${DateFormat('yyyy年M月d日').format(cacheDate)}が削除されました。');
             setState(
               () {
-                selectedDates.forEach((date) {
+                selectedDatesListForView.forEach((date) {
                   if (date == cacheDate) selectedDate = cacheDate;
                 });
-                selectedDates.remove(selectedDate);
+                selectedDatesListForView.remove(selectedDate);
               },
             );
+            var event = context.read<EventModel>();
+            event.selectedDates.remove(selectedDate);
           },
         ),
       );
@@ -253,13 +255,13 @@ class _CalendarState extends State<Calendar> {
       onTap: (isBefore)
           ? null
           : () {
-              print('${DateFormat('yyyy年M月d日').format(cacheDate)}が選択されました');
-              selectedDate = cacheDate;
+              // print('${DateFormat('yyyy年M月d日').format(cacheDate)}が選択されました');
+              // selectedDate = cacheDate;
+              setState(() {
+                selectedDatesListForView.add(cacheDate);
+              });
               var event = context.read<EventModel>();
               event.selectedDates.add(cacheDate);
-              setState(() {
-                selectedDates.add(cacheDate);
-              });
             },
     );
   }
