@@ -6,6 +6,8 @@ import '../common/hexcolor.dart';
 
 import '../common/h2text.dart';
 
+import '../main.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -53,8 +55,7 @@ Future<EventData> getEvent(
 
 class EventScreen extends StatefulWidget {
   static const routeName = '/event';
-  EventScreen({Key? key, required this.url}) : super(key: key);
-  final String url;
+  EventScreen({Key? key}) : super(key: key);
 
   @override
   _EventScreenState createState() => _EventScreenState();
@@ -63,17 +64,20 @@ class EventScreen extends StatefulWidget {
 class _EventScreenState extends State<EventScreen> {
   Future<EventData>? _futureEventData;
 
-  @override
-  void initState() {
-    super.initState();
-    // イベント情報の取得
-    _futureEventData = getEvent(context: context, url: widget.url);
-    print(_futureEventData);
-    print("initState");
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // イベント情報の取得
+  //   // _futureEventData = getEvent(context: context, url: widget.url);
+  //   // print(_futureEventData);
+  //   // print("initState");
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as EventScreenArguments;
+    _futureEventData = getEvent(context: context, url: args.url);
     return (_futureEventData == null)
         ? CircularProgressIndicator()
         : FutureBuilder<EventData>(
@@ -121,7 +125,7 @@ class _EventScreenState extends State<EventScreen> {
                                   // Text(widget.url),
                                   if (data != null)
                                     EventInfo(
-                                        url: widget.url,
+                                        url: args.url,
                                         eventName: data.name,
                                         eventDescription: data.description),
                                   Padding(

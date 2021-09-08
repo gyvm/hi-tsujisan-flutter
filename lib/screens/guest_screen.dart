@@ -11,6 +11,8 @@ import 'dart:async';
 import 'dart:convert';
 import "package:intl/intl.dart";
 
+import '../main.dart';
+
 import 'package:provider/provider.dart';
 import '../model/guest_model.dart';
 
@@ -49,9 +51,7 @@ Future<EventData> getEvent(
 
 class GuestScreen extends StatefulWidget {
   static const routeName = '/guest';
-  GuestScreen({Key? key, required this.url}) : super(key: key);
-
-  final String url;
+  GuestScreen({Key? key}) : super(key: key);
 
   @override
   _GuestScreenState createState() => _GuestScreenState();
@@ -60,18 +60,22 @@ class GuestScreen extends StatefulWidget {
 class _GuestScreenState extends State<GuestScreen> {
   Future<EventData>? _futureEventData;
 
-  @override
-  void initState() {
-    super.initState();
-    // イベント情報の取得
-    _futureEventData = getEvent(context: context, url: widget.url);
-    print(_futureEventData);
-    print("initState");
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // イベント情報の取得
+  //   _futureEventData = getEvent(context: context, url: widget.url);
+  //   print(_futureEventData);
+  //   print("initState");
+  // }
 
   @override
   Widget build(BuildContext context) {
-    print("initState2" + _futureEventData.toString());
+    final args =
+        ModalRoute.of(context)!.settings.arguments as EventScreenArguments;
+    _futureEventData = getEvent(context: context, url: args.url);
+
+    // print("initState2" + _futureEventData.toString());
     return (_futureEventData == null)
         ? CircularProgressIndicator()
         : FutureBuilder<EventData>(
@@ -115,11 +119,11 @@ class _GuestScreenState extends State<GuestScreen> {
                               child: Column(
                                 children: [
                                   Text(a!.name),
-                                  Text(widget.url),
+                                  Text(args.url),
                                   NicknameForm(),
                                   PossibleDatesTable(
                                       possibleDates: a.possibleDates),
-                                  GuestsSubmitButton(url: widget.url),
+                                  GuestsSubmitButton(url: args.url),
                                 ],
                               ),
                             ),

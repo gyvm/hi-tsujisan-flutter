@@ -10,6 +10,8 @@ import '../../common/hexcolor.dart';
 import '../../model/event_model.dart';
 import '../../screens/event_screen.dart';
 
+import '../../main.dart';
+
 class EventResponse {
   final String status;
   final String url;
@@ -53,11 +55,17 @@ createEvent(
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => EventScreen(
-                url: EventResponse.fromJson(jsonDecode(response.body)).url)));
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => EventScreen(
+    //             url: EventResponse.fromJson(jsonDecode(response.body)).url)));
+    Navigator.pushNamed(
+      context,
+      EventScreen.routeName,
+      arguments: EventScreenArguments(
+          EventResponse.fromJson(jsonDecode(response.body)).url.toString()),
+    );
   } else {
     throw Exception('Failed to create event.');
   }

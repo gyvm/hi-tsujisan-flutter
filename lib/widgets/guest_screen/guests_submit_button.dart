@@ -9,6 +9,8 @@ import '../../model/guest_model.dart';
 import '../../common/hexcolor.dart';
 import '../../screens/event_screen.dart';
 
+import '../../main.dart';
+
 submitPossibleDates(
     {required BuildContext context,
     required String url,
@@ -31,8 +33,13 @@ submitPossibleDates(
   print(response.statusCode);
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => EventScreen(url: url)));
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (context) => EventScreen(url: url)));
+    Navigator.pushNamed(
+      context,
+      EventScreen.routeName,
+      arguments: EventScreenArguments(url),
+    );
     // final pagePath = '/event' + url.toString();
     // Navigator.pushNamed(context, pagePath);
   } else {
