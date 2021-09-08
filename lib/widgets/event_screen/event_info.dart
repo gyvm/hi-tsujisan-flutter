@@ -17,7 +17,7 @@ class EventInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String sharedUrl = 'hi-tsujisan.com/' + url;
+    String sharedUrl = 'hi-tsujisan.com/event/' + url;
     return Container(
         child: Column(
       children: [
@@ -31,13 +31,13 @@ class EventInfo extends StatelessWidget {
                     Icons.content_copy_outlined,
                     size: 20,
                   ),
-                  tooltip: 'Increase volume by 10',
+                  tooltip: 'コピーする',
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: "your text"));
+                    Clipboard.setData(ClipboardData(text: sharedUrl));
                   },
                 ),
                 //https://stackoverflow.com/questions/55885433/flutter-dart-how-to-add-copy-to-clipboard-on-tap-to-a-app
-                Text(
+                SelectableText(
                   sharedUrl,
                   style: TextStyle(fontSize: 18),
                 ),
