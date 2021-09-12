@@ -7,10 +7,10 @@ import '../../common/hexcolor.dart';
 class EventInfo extends StatelessWidget {
   final String url;
   final String eventName;
-  final String? eventDescription;
+  final String eventDescription;
 
   EventInfo({
-    required this.url,
+    this.url,
     this.eventName = '未入力',
     this.eventDescription = 'a',
   }) : super();
@@ -78,7 +78,7 @@ class EventInfo extends StatelessWidget {
                 color: HexColor('#F4EFED'),
               ),
               child: Text(
-                eventDescription!,
+                eventDescription,
                 // style: TextStyle(color: HexColor('#8A5C46')),
               ),
             )),

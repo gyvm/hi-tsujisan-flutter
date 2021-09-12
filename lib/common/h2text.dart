@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class H2Text extends StatelessWidget {
   H2Text({
-    Key? key,
-    required this.text,
+    Key key,
+    this.text,
   }) : super(key: key);
 
   final String text;

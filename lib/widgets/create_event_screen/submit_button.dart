@@ -16,7 +16,7 @@ class EventResponse {
   final String status;
   final String url;
 
-  EventResponse({required this.status, required this.url});
+  EventResponse({this.status, this.url});
 
   factory EventResponse.fromJson(Map<String, dynamic> json) {
     return EventResponse(
@@ -27,12 +27,12 @@ class EventResponse {
 }
 
 createEvent(
-    {required BuildContext context,
-    required String name,
-    required String description,
-    required List<DateTime> selectedDates}) async {
+    {BuildContext context,
+    String name,
+    String description,
+    List<DateTime> selectedDates}) async {
   // print(selectedDates);
-  List<String>? possibleDates = [];
+  List<String> possibleDates = [];
   for (int i = 0; i < selectedDates.length; i++) {
     possibleDates
         .add(DateFormat('yyyy-MM-dd').format(selectedDates[i]).toString());

@@ -57,7 +57,7 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  DateTime? selectedDate;
+  DateTime selectedDate;
   DateTime now = DateTime.now();
   DateTime today = DateTime.now();
   int monthDuration = 0;
@@ -193,7 +193,7 @@ class _CalendarState extends State<Calendar> {
     );
   }
 
-  int newLineNumber({required int startNumber}) {
+  int newLineNumber({int startNumber}) {
     if (startNumber == 1) return 7;
     return startNumber - 1;
   }

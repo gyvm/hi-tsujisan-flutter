@@ -19,12 +19,11 @@ import '../model/guest_model.dart';
 // イベント情報の取得
 class EventData {
   String name;
-  String? description;
+  String description;
   // List<dynamic> possibleDates;
   List<dynamic> possibleDates;
 
-  EventData(
-      {required this.name, this.description, required this.possibleDates});
+  EventData({this.name, this.description, this.possibleDates});
 
   factory EventData.fromJson(Map<String, dynamic> json) {
     print(json['possible_dates']);
@@ -37,8 +36,7 @@ class EventData {
 }
 
 // イベント情報の取得
-Future<EventData> getEvent(
-    {required BuildContext context, required String url}) async {
+Future<EventData> getEvent({BuildContext context, String url}) async {
   String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
 
@@ -51,14 +49,14 @@ Future<EventData> getEvent(
 
 class GuestScreen extends StatefulWidget {
   static const routeName = '/guest';
-  GuestScreen({Key? key}) : super(key: key);
+  GuestScreen({Key key}) : super(key: key);
 
   @override
   _GuestScreenState createState() => _GuestScreenState();
 }
 
 class _GuestScreenState extends State<GuestScreen> {
-  Future<EventData>? _futureEventData;
+  Future<EventData> _futureEventData;
 
   // @override
   // void initState() {
@@ -72,7 +70,7 @@ class _GuestScreenState extends State<GuestScreen> {
   @override
   Widget build(BuildContext context) {
     final args =
-        ModalRoute.of(context)!.settings.arguments as EventScreenArguments;
+        ModalRoute.of(context).settings.arguments as EventScreenArguments;
     _futureEventData = getEvent(context: context, url: args.url);
 
     // print("initState2" + _futureEventData.toString());
@@ -118,7 +116,7 @@ class _GuestScreenState extends State<GuestScreen> {
                               create: (context) => GuestModel(),
                               child: Column(
                                 children: [
-                                  Text(a!.name),
+                                  Text(a.name),
                                   Text(args.url),
                                   NicknameForm(),
                                   PossibleDatesTable(

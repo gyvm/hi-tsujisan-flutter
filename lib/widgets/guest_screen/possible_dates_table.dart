@@ -11,7 +11,7 @@ class PossibleDatesTable extends StatefulWidget {
   // final List<dynamic> possibleDates;
   final List<dynamic> possibleDates;
   PossibleDatesTable({
-    required this.possibleDates,
+    this.possibleDates,
   });
 
   @override

@@ -6,16 +6,16 @@ import 'package:intl/intl.dart';
 
 class PossibleDatesTable extends StatelessWidget {
   PossibleDatesTable(
-      {Key? key,
-      required this.possibleDates,
+      {Key key,
+      this.possibleDates,
       this.guestData,
       this.guestPossibleDates,
       this.dateRate})
       : super(key: key);
   final List<dynamic> possibleDates;
-  final List<dynamic>? guestData;
-  final List<dynamic>? guestPossibleDates;
-  final Map<dynamic, dynamic>? dateRate;
+  final List<dynamic> guestData;
+  final List<dynamic> guestPossibleDates;
+  final Map<dynamic, dynamic> dateRate;
   // List<Map<String, dynamic>>? guestData;
 
   @override
@@ -107,11 +107,11 @@ class PossibleDatesTable extends StatelessWidget {
                   ),
                 ),
               ),
-              for (int i = 0; i < guestData!.length; i++)
+              for (int i = 0; i < guestData.length; i++)
                 DataColumn(
                   label: Container(
                       width: 68,
-                      child: Center(child: Text(guestData![i]['nickname']))),
+                      child: Center(child: Text(guestData[i]['nickname']))),
                 ),
               // DataColumn(
               //   label: Container(
@@ -148,11 +148,10 @@ class PossibleDatesTable extends StatelessWidget {
                       ),
                     ),
                     // 参加可能人数
-                    (dateRate!.containsKey(possibleDates[i]["id"]))
+                    (dateRate.containsKey(possibleDates[i]["id"]))
                         ? DataCell(Center(
                             child: Text(
-                              dateRate![possibleDates[i]["id"]].toString() +
-                                  '人',
+                              dateRate[possibleDates[i]["id"]].toString() + '人',
                               // style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ))
@@ -168,10 +167,10 @@ class PossibleDatesTable extends StatelessWidget {
                 cells: <DataCell>[
                   DataCell(Text('コメント')),
                   DataCell(Text('')),
-                  for (int i = 0; i < guestData!.length; i++)
+                  for (int i = 0; i < guestData.length; i++)
                     DataCell(
                       Container(
-                          width: 68, child: Text(guestData![i]['comment'])),
+                          width: 68, child: Text(guestData[i]['comment'])),
                     ),
                 ],
               ),

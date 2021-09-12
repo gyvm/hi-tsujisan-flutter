@@ -15,16 +15,16 @@ import 'dart:convert';
 // イベント情報の取得
 class EventData {
   String name;
-  String? description;
+  String description;
   List<dynamic> possibleDates;
-  List<dynamic>? guestData;
-  List<dynamic>? guestPossibleDates;
-  Map<dynamic, dynamic>? dateRate;
+  List<dynamic> guestData;
+  List<dynamic> guestPossibleDates;
+  Map<dynamic, dynamic> dateRate;
 
   EventData(
-      {required this.name,
+      {this.name,
       this.description,
-      required this.possibleDates,
+      this.possibleDates,
       this.guestData,
       this.guestPossibleDates,
       this.dateRate});
@@ -41,8 +41,7 @@ class EventData {
 }
 
 // イベント情報の取得
-Future<EventData> getEvent(
-    {required BuildContext context, required String url}) async {
+Future<EventData> getEvent({BuildContext context, String url}) async {
   String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
 
@@ -55,14 +54,14 @@ Future<EventData> getEvent(
 
 class EventScreen extends StatefulWidget {
   static const routeName = '/event';
-  EventScreen({Key? key}) : super(key: key);
+  EventScreen({Key key}) : super(key: key);
 
   @override
   _EventScreenState createState() => _EventScreenState();
 }
 
 class _EventScreenState extends State<EventScreen> {
-  Future<EventData>? _futureEventData;
+  Future<EventData> _futureEventData;
 
   // @override
   // void initState() {
@@ -73,11 +72,21 @@ class _EventScreenState extends State<EventScreen> {
   //   // print("initState");
   // }
 
+  // var eventurl;
+  final eventurl = '8epa4z3CCz1631138517';
+
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as EventScreenArguments;
-    _futureEventData = getEvent(context: context, url: args.url);
+    // if (ModalRoute.of(context)!.settings.arguments as EventScreenArguments !=
+    //     null) {
+    //   final args =
+    //       ModalRoute.of(context)!.settings.arguments as EventScreenArguments;
+    //   eventurl = args.url;
+    // } else {
+    //   final eventurl = '8epa4z3CCz1631138517';
+    // }
+
+    _futureEventData = getEvent(context: context, url: eventurl);
     return (_futureEventData == null)
         ? CircularProgressIndicator()
         : FutureBuilder<EventData>(
@@ -125,7 +134,7 @@ class _EventScreenState extends State<EventScreen> {
                                   // Text(widget.url),
                                   if (data != null)
                                     EventInfo(
-                                        url: args.url,
+                                        url: eventurl,
                                         eventName: data.name,
                                         eventDescription: data.description),
                                   Padding(

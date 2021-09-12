@@ -12,11 +12,11 @@ import '../../screens/event_screen.dart';
 import '../../main.dart';
 
 submitPossibleDates(
-    {required BuildContext context,
-    required String url,
-    required String nickname,
-    required String comment,
-    required Map<String, int> markedPossibleDates}) async {
+    {BuildContext context,
+    String url,
+    String nickname,
+    String comment,
+    Map<String, int> markedPossibleDates}) async {
   final response = await http.post(
     Uri.http('localhost:3000', '/api/v1/guests'),
     headers: <String, String>{
@@ -48,7 +48,7 @@ submitPossibleDates(
 }
 
 class Event {
-  final String? status;
+  final String status;
   final event;
 
   Event({this.status, this.event});
@@ -63,7 +63,7 @@ class Event {
 
 class GuestsSubmitButton extends StatefulWidget {
   final String url;
-  GuestsSubmitButton({required this.url});
+  GuestsSubmitButton({this.url});
 
   @override
   _GuestsSubmitButtonState createState() => _GuestsSubmitButtonState();
