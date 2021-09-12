@@ -30,7 +30,8 @@ createEvent(
     {BuildContext context,
     String name,
     String description,
-    List<DateTime> selectedDates}) async {
+    @required List<DateTime> selectedDates,
+    @required tapSubmit}) async {
   // print(selectedDates);
   List<String> possibleDates = [];
   for (int i = 0; i < selectedDates.length; i++) {
@@ -60,18 +61,23 @@ createEvent(
     //     MaterialPageRoute(
     //         builder: (context) => EventScreen(
     //             url: EventResponse.fromJson(jsonDecode(response.body)).url)));
-    Navigator.pushNamed(
-      context,
-      EventScreen.routeName,
-      arguments: EventScreenArguments(
-          EventResponse.fromJson(jsonDecode(response.body)).url.toString()),
-    );
+
+    tapSubmit(EventResponse.fromJson(jsonDecode(response.body)).url);
+    // Navigator.pushNamed(
+    //   context,
+    //   EventScreen.routeName,
+    //   arguments: EventScreenArguments(
+    //       EventResponse.fromJson(jsonDecode(response.body)).url.toString()),
+    // );
   } else {
     throw Exception('Failed to create event.');
   }
 }
 
 class SubmitButton extends StatefulWidget {
+  final tapSubmit;
+  SubmitButton({this.tapSubmit});
+
   @override
   _SubmitButtonState createState() => _SubmitButtonState();
 }
@@ -106,7 +112,8 @@ class _SubmitButtonState extends State<SubmitButton> {
                       context: context,
                       name: event.eventName,
                       description: event.eventDescription,
-                      selectedDates: event.selectedDates);
+                      selectedDates: event.selectedDates,
+                      tapSubmit: widget.tapSubmit);
                 },
               ),
             ),

@@ -48,8 +48,11 @@ Future<EventData> getEvent({BuildContext context, String url}) async {
 }
 
 class GuestScreen extends StatefulWidget {
-  static const routeName = '/guest';
-  GuestScreen({Key key}) : super(key: key);
+  // static const routeName = '/guest';
+  final String id;
+  final ValueChanged onTapped;
+  const GuestScreen({Key key, @required this.id, @required this.onTapped})
+      : super(key: key);
 
   @override
   _GuestScreenState createState() => _GuestScreenState();
@@ -69,11 +72,6 @@ class _GuestScreenState extends State<GuestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context).settings.arguments as EventScreenArguments;
-    _futureEventData = getEvent(context: context, url: args.url);
-
-    // print("initState2" + _futureEventData.toString());
     return (_futureEventData == null)
         ? CircularProgressIndicator()
         : FutureBuilder<EventData>(
@@ -117,11 +115,13 @@ class _GuestScreenState extends State<GuestScreen> {
                               child: Column(
                                 children: [
                                   Text(a.name),
-                                  Text(args.url),
+                                  Text(widget.id),
                                   NicknameForm(),
                                   PossibleDatesTable(
                                       possibleDates: a.possibleDates),
-                                  GuestsSubmitButton(url: args.url),
+                                  GuestsSubmitButton(
+                                      url: widget.id,
+                                      onTapped: widget.onTapped),
                                 ],
                               ),
                             ),

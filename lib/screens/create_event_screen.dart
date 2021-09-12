@@ -9,7 +9,9 @@ import '../widgets/create_event_screen/submit_button.dart';
 import '../widgets/create_event_screen/onboarding.dart';
 
 class CreateEventScreen extends StatelessWidget {
-  static const routeName = '/new';
+  // static const routeName = '/new';
+  final ValueChanged onTapped;
+  CreateEventScreen({Key key, @required this.onTapped}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class CreateEventScreen extends StatelessWidget {
                         ]),
                         EventInfoForm(),
                         CalendarContainer(),
-                        SubmitButton(),
+                        SubmitButton(tapSubmit: onTapped),
                       ],
                     ),
                   ),

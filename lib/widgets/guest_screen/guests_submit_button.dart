@@ -13,10 +13,11 @@ import '../../main.dart';
 
 submitPossibleDates(
     {BuildContext context,
-    String url,
+    @required String url,
     String nickname,
     String comment,
-    Map<String, int> markedPossibleDates}) async {
+    Map<String, int> markedPossibleDates,
+    @required tapSubmit}) async {
   final response = await http.post(
     Uri.http('localhost:3000', '/api/v1/guests'),
     headers: <String, String>{
@@ -35,11 +36,13 @@ submitPossibleDates(
     print(jsonDecode(response.body));
     // Navigator.push(context,
     //     MaterialPageRoute(builder: (context) => EventScreen(url: url)));
-    Navigator.pushNamed(
-      context,
-      EventScreen.routeName,
-      arguments: EventScreenArguments(url),
-    );
+
+    tapSubmit(url);
+    // Navigator.pushNamed(
+    //   context,
+    //   EventScreen.routeName,
+    //   arguments: EventScreenArguments(url),
+    // );
     // final pagePath = '/event' + url.toString();
     // Navigator.pushNamed(context, pagePath);
   } else {
@@ -63,7 +66,8 @@ class Event {
 
 class GuestsSubmitButton extends StatefulWidget {
   final String url;
-  GuestsSubmitButton({this.url});
+  final onTapped;
+  GuestsSubmitButton({this.url, @required this.onTapped});
 
   @override
   _GuestsSubmitButtonState createState() => _GuestsSubmitButtonState();
@@ -93,7 +97,8 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
                     url: widget.url,
                     nickname: guest.nickname,
                     comment: guest.comment,
-                    markedPossibleDates: guest.markedPossibleDates);
+                    markedPossibleDates: guest.markedPossibleDates,
+                    tapSubmit: widget.onTapped);
               },
             ),
           ),

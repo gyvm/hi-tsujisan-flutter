@@ -53,8 +53,9 @@ Future<EventData> getEvent({BuildContext context, String url}) async {
 }
 
 class EventScreen extends StatefulWidget {
-  static const routeName = '/event';
-  EventScreen({Key key}) : super(key: key);
+  // static const routeName = '/event';
+  final String id;
+  EventScreen({Key key, @required this.id}) : super(key: key);
 
   @override
   _EventScreenState createState() => _EventScreenState();
@@ -73,7 +74,7 @@ class _EventScreenState extends State<EventScreen> {
   // }
 
   // var eventurl;
-  final eventurl = '8epa4z3CCz1631138517';
+  // final eventurl = '8epa4z3CCz1631138517';
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +87,7 @@ class _EventScreenState extends State<EventScreen> {
     //   final eventurl = '8epa4z3CCz1631138517';
     // }
 
-    _futureEventData = getEvent(context: context, url: eventurl);
+    _futureEventData = getEvent(context: context, url: widget.id);
     return (_futureEventData == null)
         ? CircularProgressIndicator()
         : FutureBuilder<EventData>(
@@ -134,7 +135,7 @@ class _EventScreenState extends State<EventScreen> {
                                   // Text(widget.url),
                                   if (data != null)
                                     EventInfo(
-                                        url: eventurl,
+                                        url: widget.id,
                                         eventName: data.name,
                                         eventDescription: data.description),
                                   Padding(
