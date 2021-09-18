@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 
 import '../common/hexcolor.dart';
 import '../model/event_model.dart';
-import '../widgets/create_event_screen/event_info_form.dart';
-import '../widgets/create_event_screen/calendar.dart';
-import '../widgets/create_event_screen/submit_button.dart';
-import '../widgets/create_event_screen/onboarding.dart';
+import '../widgets/create_screen/event_info_form.dart';
+import '../widgets/create_screen/calendar.dart';
+import '../widgets/create_screen/submit_button.dart';
+import '../widgets/create_screen/onboarding.dart';
 
 import '../page_state.dart';
 
