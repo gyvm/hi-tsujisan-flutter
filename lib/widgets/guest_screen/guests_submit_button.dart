@@ -13,8 +13,7 @@ import '../../main.dart';
 import '../../page_state.dart';
 
 submitPossibleDates(
-    {BuildContext context,
-    @required String url,
+    {@required String url,
     String nickname,
     String comment,
     Map<String, int> markedPossibleDates,
@@ -26,29 +25,20 @@ submitPossibleDates(
     },
     body: jsonEncode(<String, dynamic>{
       "url": url,
-      "nickname": nickname,
-      "comment": comment,
-      "possible_dates": markedPossibleDates,
+      "guest": {
+        "nickname": nickname,
+        "comment": comment,
+        "possible_dates": markedPossibleDates,
+      }
     }),
   );
 
   print(response.statusCode);
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    // Navigator.push(context,
-    //     MaterialPageRoute(builder: (context) => EventScreen(url: url)));
-
     onTapped(
       PageState(eventId: url, pageName: 'event'),
     );
-    // onTapped(url);
-    // Navigator.pushNamed(
-    //   context,
-    //   EventScreen.routeName,
-    //   arguments: EventScreenArguments(url),
-    // );
-    // final pagePath = '/event' + url.toString();
-    // Navigator.pushNamed(context, pagePath);
   } else {
     throw Exception('Failed to add guestdata.');
   }
@@ -97,7 +87,6 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
               ),
               onPressed: () {
                 submitPossibleDates(
-                    context: context,
                     url: widget.url,
                     nickname: guest.nickname,
                     comment: guest.comment,
