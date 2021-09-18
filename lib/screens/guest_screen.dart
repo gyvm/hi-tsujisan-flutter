@@ -16,6 +16,8 @@ import '../main.dart';
 import 'package:provider/provider.dart';
 import '../model/guest_model.dart';
 
+import '../page_state.dart';
+
 // イベント情報の取得
 class EventData {
   String name;
@@ -36,7 +38,7 @@ class EventData {
 }
 
 // イベント情報の取得
-Future<EventData> getEvent({BuildContext context, String url}) async {
+Future<EventData> getEvent({String url}) async {
   String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
 
@@ -49,9 +51,9 @@ Future<EventData> getEvent({BuildContext context, String url}) async {
 
 class GuestScreen extends StatefulWidget {
   // static const routeName = '/guest';
-  final String id;
-  final ValueChanged onTapped;
-  const GuestScreen({Key key, @required this.id, @required this.onTapped})
+  final String eventId;
+  final ValueChanged<PageState> onTapped;
+  const GuestScreen({Key key, @required this.eventId, @required this.onTapped})
       : super(key: key);
 
   @override
@@ -61,78 +63,78 @@ class GuestScreen extends StatefulWidget {
 class _GuestScreenState extends State<GuestScreen> {
   Future<EventData> _futureEventData;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // イベント情報の取得
-  //   _futureEventData = getEvent(context: context, url: widget.url);
-  //   print(_futureEventData);
-  //   print("initState");
-  // }
+  @override
+  void initState() {
+    super.initState();
+    // イベント情報の取得
+    _futureEventData = getEvent(url: widget.eventId);
+    print(_futureEventData);
+    print("initState");
+  }
 
   @override
   Widget build(BuildContext context) {
-    return (_futureEventData == null)
-        ? CircularProgressIndicator()
-        : FutureBuilder<EventData>(
-            future: _futureEventData,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              var a = snapshot.data;
-              if (a != null) {
-                print('a.possibleDates');
-                print(a.possibleDates);
-                // var guest = context.read<GuestModel>();
-                // guest.url = widget.url;
-              }
+    print('this is guest screen');
+    return FutureBuilder<EventData>(
+      future: _futureEventData,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        if (snapshot.hasData) {
+          var data = snapshot.data;
+          print(data.possibleDates);
+          print(data.possibleDates);
+          // var guest = context.read<GuestModel>();
+          // guest.url = widget.url;
 
-              // return Center(child: (a != null) ? Text(a.name) : Text('error'));
-              return SafeArea(
-                child: Scaffold(
-                  backgroundColor: HexColor('#EFE2DB'),
-                  appBar: AppBar(
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      title: Text('👋🐑hi-tsuji-san'),
-                      centerTitle: false,
-                      automaticallyImplyLeading: false),
-                  body: LayoutBuilder(
-                    builder: (BuildContext context,
-                        BoxConstraints viewportConstraints) {
-                      return SingleChildScrollView(
-                        child: Center(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(
-                              // minWidth: 640,
-                              // minHeight: 0,
-                              maxWidth: 720,
-                              maxHeight: double.infinity,
-                            ),
-                            child: ChangeNotifierProvider(
-                              create: (context) => GuestModel(),
-                              child: Column(
-                                children: [
-                                  Text(a.name),
-                                  Text(widget.id),
-                                  NicknameForm(),
-                                  PossibleDatesTable(
-                                      possibleDates: a.possibleDates),
-                                  GuestsSubmitButton(
-                                      url: widget.id,
-                                      onTapped: widget.onTapped),
-                                ],
-                              ),
-                            ),
+          // return Center(child: (a != null) ? Text(a.name) : Text('error'));
+          return SafeArea(
+            child: Scaffold(
+              backgroundColor: HexColor('#EFE2DB'),
+              appBar: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  title: Text('👋🐑hi-tsuji-san'),
+                  centerTitle: false,
+                  automaticallyImplyLeading: false),
+              body: LayoutBuilder(
+                builder:
+                    (BuildContext context, BoxConstraints viewportConstraints) {
+                  return SingleChildScrollView(
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          // minWidth: 640,
+                          // minHeight: 0,
+                          maxWidth: 720,
+                          maxHeight: double.infinity,
+                        ),
+                        child: ChangeNotifierProvider(
+                          create: (context) => GuestModel(),
+                          child: Column(
+                            children: [
+                              Text(data.name),
+                              Text(widget.eventId),
+                              NicknameForm(),
+                              PossibleDatesTable(
+                                  possibleDates: data.possibleDates),
+                              GuestsSubmitButton(
+                                  url: widget.eventId,
+                                  onTapped: widget.onTapped),
+                            ],
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           );
+        }
+        return const CircularProgressIndicator();
+      },
+    );
   }
 }

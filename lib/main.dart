@@ -1,37 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:url_strategy/url_strategy.dart';
-import './screens/create_event_screen.dart';
+import 'screens/create_screen.dart';
 import './screens/guest_screen.dart';
-import './screens/event_screen.dart';
+import 'screens/details_screen.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 import 'event_route_path.dart';
+import 'page_state.dart';
 
 void main() {
   runApp(MyApp());
 }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         textTheme: GoogleFonts.kosugiMaruTextTheme(
-//           Theme.of(context).textTheme,
-//         ),
-//       ),
-//       initialRoute: CreateEventScreen.routeName,
-//       routes: {
-//         CreateEventScreen.routeName: (context) => CreateEventScreen(),
-//         EventScreen.routeName: (context) => EventScreen(),
-//         GuestScreen.routeName: (context) => GuestScreen(),
-//       },
-//     );
-//   }
-// }
 
 class MyApp extends StatefulWidget {
   @override
@@ -58,39 +38,39 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-// class EventScreenArguments {
-//   final String url;
-
-//   EventScreenArguments(this.url);
-// }
-
 class EventRouterDelegate extends RouterDelegate<EventRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<EventRoutePath> {
   final GlobalKey<NavigatorState> navigatorKey;
   EventRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
-  String _id;
+  PageState _selectedEvent;
   bool show404 = false;
-  String _pageName = 'event';
 
-  void _handleGoEventPage(String id) {
-    _id = id;
-    _pageName = 'event';
+  void _handleGoEventScreen(PageState pageState) {
+    _selectedEvent = pageState;
     notifyListeners();
   }
 
-  void _handleGoGuestPage(String id) {
-    _id = id;
-    _pageName = 'guest';
+  void _handleGoGuestScreen(PageState pageState) {
+    _selectedEvent = pageState;
     notifyListeners();
   }
 
   EventRoutePath get currentConfiguration {
     if (show404) return EventRoutePath.unknown();
 
-    if (_id == null) return EventRoutePath.createscreen();
-
-    return EventRoutePath.eventscreen(_id);
+    if (_selectedEvent == null) return EventRoutePath.createScreen();
+    print(_selectedEvent.pageName);
+    if (_selectedEvent.pageName == 'guest') {
+      print("_selectedEvent.pageName == 'guest'");
+      return EventRoutePath.guestScreen(_selectedEvent.eventId);
+    }
+    if (_selectedEvent.pageName == 'event') {
+      print("_selectedEvent.pageName == 'event'");
+      return EventRoutePath.detailsScreen(_selectedEvent.eventId);
+    }
+    print('no match');
+    return EventRoutePath.createScreen();
   }
 
   // @override
@@ -102,30 +82,29 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
       key: navigatorKey,
       pages: [
         MaterialPage(
-          key: ValueKey('CreateEventPage'),
-          child: CreateEventScreen(
-            onTapped: _handleGoEventPage,
+          key: ValueKey('CreateScreen'),
+          child: CreateScreen(
+            onTapped: _handleGoEventScreen,
           ),
         ),
         if (show404)
-          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen())
-        else if ((_pageName != 'event') || (_pageName != 'guest'))
-          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen())
-        else if ((_id != null) && (_pageName == 'event'))
-          EventPage(id: _id)
-        else if ((_id != null) && (_pageName == 'guest'))
+          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()),
+        // if ((_selectedEvent?.eventId != null) ||
+        //     (_selectedEvent?.pageName == 'guest'))
+        if (_selectedEvent?.pageName == 'guest')
           GuestPage(
-            id: _id,
-            onTapped: _handleGoEventPage,
+            eventId: _selectedEvent.eventId,
+            onTapped: _handleGoEventScreen,
           ),
+        if (_selectedEvent?.pageName == 'event')
+          DetailsPage(eventId: _selectedEvent.eventId),
       ],
       onPopPage: (route, result) {
         if (!route.didPop(result)) {
           return false;
         }
 
-        _id = null;
-        _pageName = 'event';
+        _selectedEvent = null;
         show404 = false;
         notifyListeners();
 
@@ -138,58 +117,62 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
   @override
   Future<void> setNewRoutePath(EventRoutePath path) async {
     if (path.isUnknown) {
-      _id = null;
+      _selectedEvent = null;
       show404 = true;
-      // have an empty return to end the function
       return;
     }
 
-    if (path.isEventPage || path.isGuestPage) {
-      if (path.id.length <= 0) {
-        show404 = true;
-        return;
-      }
-      _id = path.id;
-    } else {
-      _id = null;
-    }
-
+    if (path.eventId.length == null)
+      _selectedEvent = PageState(eventId: null, pageName: null);
+    print(path.getPageName);
+    print(path.hasEventId);
+    print(path.eventId);
+    if ((path.hasEventId) && (path.getPageName == 'event')) {
+      _selectedEvent = PageState(eventId: path.eventId, pageName: 'event');
+    } else if ((path.hasEventId) && (path.getPageName == 'guest')) {
+      _selectedEvent = PageState(eventId: path.eventId, pageName: 'guest');
+    } else
+      _selectedEvent = null;
     show404 = false;
+    print('show404 false');
+    print(_selectedEvent.eventId);
+    print(_selectedEvent.pageName);
+    return;
   }
 }
 
-class EventPage extends Page {
-  final id;
+class DetailsPage extends Page {
+  final eventId;
 
-  EventPage({
-    this.id,
-  }) : super(key: ValueKey(id));
+  DetailsPage({
+    this.eventId,
+  }) : super(key: ValueKey(eventId));
 
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
-        return EventScreen(id: id);
+        return DetailsScreen(eventId: eventId);
       },
     );
   }
 }
 
 class GuestPage extends Page {
-  final String id;
+  final String eventId;
   final onTapped;
 
   GuestPage({
-    this.id,
+    this.eventId,
     this.onTapped,
-  }) : super(key: ValueKey(id));
+  }) : super(key: ValueKey(eventId));
 
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
         return GuestScreen(
-          id: id,
+          eventId: eventId,
           onTapped: onTapped,
         );
       },
@@ -204,17 +187,18 @@ class EventRouteInformationParser
       RouteInformation routeInfo) async {
     final uri = Uri.parse(routeInfo.location);
 
-    if (uri.pathSegments.length == 0) return EventRoutePath.createscreen();
+    if (uri.pathSegments.length == 0) return EventRoutePath.createScreen();
 
     if (uri.pathSegments.length == 2) {
-      if ((uri.pathSegments.first != 'event') ||
+      if ((uri.pathSegments.first != 'event') &&
           (uri.pathSegments.first != 'guest')) return EventRoutePath.unknown();
-      final String id = uri.pathSegments.elementAt(1);
-      if (id == null) return EventRoutePath.unknown();
+
+      final String eventId = uri.pathSegments.elementAt(1);
+      // if (eventId == null) return EventRoutePath.unknown();
       if (uri.pathSegments.first == 'event')
-        return EventRoutePath.eventscreen(id);
+        return EventRoutePath.detailsScreen(eventId);
       if (uri.pathSegments.first == 'guest')
-        return EventRoutePath.guestscreen(id);
+        return EventRoutePath.guestScreen(eventId);
     }
 
     return EventRoutePath.unknown();
@@ -225,14 +209,16 @@ class EventRouteInformationParser
     if (path.isUnknown) {
       return RouteInformation(location: '/404');
     }
-    if (path.isCreateEventPage) {
+    if (path.isCreatePage) {
       return RouteInformation(location: '/');
     }
-    if (path.isEventPage) {
-      return RouteInformation(location: '/event/${path.id}');
-    }
-    if (path.isGuestPage) {
-      return RouteInformation(location: '/guest/${path.id}');
+    if (path.hasEventId) {
+      if (path.getPageName == 'event') {
+        return RouteInformation(location: '/event/${path.eventId}');
+      }
+      if (path.getPageName == 'guest') {
+        return RouteInformation(location: '/guest/${path.eventId}');
+      }
     }
 
     return null;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hi_tsujisan_frontend/widgets/guest_screen/guests_submit_button.dart';
 import 'package:provider/provider.dart';
 
 import '../common/hexcolor.dart';
@@ -8,10 +9,12 @@ import '../widgets/create_event_screen/calendar.dart';
 import '../widgets/create_event_screen/submit_button.dart';
 import '../widgets/create_event_screen/onboarding.dart';
 
-class CreateEventScreen extends StatelessWidget {
+import '../page_state.dart';
+
+class CreateScreen extends StatelessWidget {
   // static const routeName = '/new';
-  final ValueChanged onTapped;
-  CreateEventScreen({Key key, @required this.onTapped}) : super(key: key);
+  final ValueChanged<PageState> onTapped;
+  CreateScreen({Key key, @required this.onTapped}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class CreateEventScreen extends StatelessWidget {
                         ]),
                         EventInfoForm(),
                         CalendarContainer(),
-                        SubmitButton(tapSubmit: onTapped),
+                        SubmitButton(onTapped: onTapped),
                       ],
                     ),
                   ),

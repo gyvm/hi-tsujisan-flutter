@@ -1,22 +1,29 @@
 class EventRoutePath {
-  final String id;
+  final String eventId;
+  final String pageName;
   final bool isUnknown;
 
-  EventRoutePath.createscreen()
-      : id = null,
+  EventRoutePath.createScreen()
+      : eventId = null,
+        pageName = null,
         isUnknown = false;
 
-  EventRoutePath.eventscreen(this.id) : isUnknown = false;
+  EventRoutePath.detailsScreen(this.eventId)
+      : pageName = 'event',
+        isUnknown = false;
 
-  EventRoutePath.guestscreen(this.id) : isUnknown = false;
+  EventRoutePath.guestScreen(this.eventId)
+      : pageName = 'guest',
+        isUnknown = false;
 
   EventRoutePath.unknown()
-      : id = null,
+      : eventId = null,
+        pageName = null,
         isUnknown = true;
 
-  bool get isCreateEventPage => id == null;
+  bool get isCreatePage => eventId == null;
 
-  bool get isEventPage => id != null;
+  bool get hasEventId => eventId != null;
 
-  bool get isGuestPage => id != null;
+  String get getPageName => pageName;
 }

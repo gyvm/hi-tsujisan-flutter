@@ -8,9 +8,11 @@ import 'dart:convert';
 
 import '../../common/hexcolor.dart';
 import '../../model/event_model.dart';
-import '../../screens/event_screen.dart';
+import '../../screens/details_screen.dart';
 
 import '../../main.dart';
+
+import '../../page_state.dart';
 
 class EventResponse {
   final String status;
@@ -31,13 +33,12 @@ createEvent(
     String name,
     String description,
     @required List<DateTime> selectedDates,
-    @required tapSubmit}) async {
+    @required ValueChanged<PageState> onTapped}) async {
   // print(selectedDates);
   List<String> possibleDates = [];
   for (int i = 0; i < selectedDates.length; i++) {
     possibleDates
         .add(DateFormat('yyyy-MM-dd').format(selectedDates[i]).toString());
-    // print(possibleDates);
   }
 
   final response = await http.post(
@@ -56,27 +57,19 @@ createEvent(
 
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => EventScreen(
-    //             url: EventResponse.fromJson(jsonDecode(response.body)).url)));
-
-    tapSubmit(EventResponse.fromJson(jsonDecode(response.body)).url);
-    // Navigator.pushNamed(
-    //   context,
-    //   EventScreen.routeName,
-    //   arguments: EventScreenArguments(
-    //       EventResponse.fromJson(jsonDecode(response.body)).url.toString()),
-    // );
+    onTapped(
+      PageState(
+          eventId: EventResponse.fromJson(jsonDecode(response.body)).url,
+          pageName: 'event'),
+    );
   } else {
     throw Exception('Failed to create event.');
   }
 }
 
 class SubmitButton extends StatefulWidget {
-  final tapSubmit;
-  SubmitButton({this.tapSubmit});
+  final ValueChanged<PageState> onTapped;
+  SubmitButton({this.onTapped});
 
   @override
   _SubmitButtonState createState() => _SubmitButtonState();
@@ -113,7 +106,7 @@ class _SubmitButtonState extends State<SubmitButton> {
                       name: event.eventName,
                       description: event.eventDescription,
                       selectedDates: event.selectedDates,
-                      tapSubmit: widget.tapSubmit);
+                      onTapped: widget.onTapped);
                 },
               ),
             ),
