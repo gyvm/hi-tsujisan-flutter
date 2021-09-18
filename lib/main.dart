@@ -9,7 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'event_route_path.dart';
 import 'page_state.dart';
 
+// import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
+import 'configure_web.dart';
+
 void main() {
+  configureApp();
   runApp(MyApp());
 }
 
