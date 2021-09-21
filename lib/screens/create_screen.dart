@@ -45,11 +45,7 @@ class CreateScreen extends StatelessWidget {
                     create: (context) => EventModel(),
                     child: Column(
                       children: [
-                        Row(children: [
-                          Onboarding(),
-                          ElevatedButton(
-                              onPressed: () {}, child: Text('button'))
-                        ]),
+                        Onboarding(),
                         EventInfoForm(),
                         CalendarContainer(),
                         SubmitButton(onTapped: onTapped),
