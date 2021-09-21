@@ -33,7 +33,7 @@ class EventInfo extends StatelessWidget {
             padding: const EdgeInsets.only(top: 40, bottom: 70),
             child: Column(children: [
               Text(
-                'イベントURLを共有して、出欠表を作りましょう',
+                'イベントURLを共有して出欠表を作りましょう',
                 style: TextStyle(
                   fontSize: 18,
                 ),

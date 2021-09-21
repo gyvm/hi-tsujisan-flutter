@@ -39,7 +39,7 @@ class Onboarding extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'アプリです。',
+                          text: 'アプリです',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -61,7 +61,7 @@ class Onboarding extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'ステップでかんたんに予定を立てましょう。',
+                          text: 'ステップでかんたんに予定を立てましょう',
                           style: TextStyle(
                             fontSize: 20,
                           ),

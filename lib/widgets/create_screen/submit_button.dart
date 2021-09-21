@@ -64,7 +64,7 @@ createEvent(
           isUnknown: false),
     );
   } else {
-    throw Exception('イベントの作成に失敗しました。ページをリロードしてください。');
+    throw Exception('イベントの作成に失敗したためページをリロードしてください');
   }
 }
 

@@ -42,7 +42,7 @@ submitPossibleDates(
       PageState(eventId: url, pageName: 'event', isUnknown: false),
     );
   } else {
-    throw Exception('データの登録に失敗しました。ページをリロードしてください。');
+    throw Exception('データの登録に失敗したためページをリロードしてください');
   }
 }
 
