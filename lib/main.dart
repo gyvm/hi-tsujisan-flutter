@@ -3,6 +3,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'screens/create_screen.dart';
 import './screens/guest_screen.dart';
 import 'screens/details_screen.dart';
+import 'screens/unkown_screen.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,20 +51,20 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
   PageState _selectedEvent;
   bool show404 = false;
 
-  void _handleGoEventScreen(PageState pageState) {
+  void _handleNextScreen(PageState pageState) {
     _selectedEvent = pageState;
-    notifyListeners();
-  }
-
-  void _handleGoGuestScreen(PageState pageState) {
-    _selectedEvent = pageState;
+    if (_selectedEvent.isUnknown) {
+      show404 = true;
+    }
     notifyListeners();
   }
 
   EventRoutePath get currentConfiguration {
     if (show404) return EventRoutePath.unknown();
-
     if (_selectedEvent == null) return EventRoutePath.createScreen();
+
+    if (_selectedEvent.isUnknown) return EventRoutePath.unknown();
+
     print(_selectedEvent.pageName);
     if (_selectedEvent.pageName == 'guest') {
       print("_selectedEvent.pageName == 'guest'");
@@ -88,20 +89,21 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
         MaterialPage(
           key: ValueKey('CreateScreen'),
           child: CreateScreen(
-            onTapped: _handleGoEventScreen,
+            onTapped: _handleNextScreen,
           ),
         ),
         if (show404)
           MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()),
-        // if ((_selectedEvent?.eventId != null) ||
-        //     (_selectedEvent?.pageName == 'guest'))
         if (_selectedEvent?.pageName == 'guest')
           GuestPage(
             eventId: _selectedEvent.eventId,
-            onTapped: _handleGoEventScreen,
+            onTapped: _handleNextScreen,
           ),
         if (_selectedEvent?.pageName == 'event')
-          DetailsPage(eventId: _selectedEvent.eventId),
+          DetailsPage(
+            eventId: _selectedEvent.eventId,
+            onTapped: _handleNextScreen,
+          ),
       ],
       onPopPage: (route, result) {
         if (!route.didPop(result)) {
@@ -121,23 +123,26 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
   @override
   Future<void> setNewRoutePath(EventRoutePath path) async {
     if (path.isUnknown) {
-      _selectedEvent = null;
+      _selectedEvent =
+          PageState(eventId: null, pageName: null, isUnknown: true);
       show404 = true;
       return;
     }
 
     if (path.eventId.length == null)
-      _selectedEvent = PageState(eventId: null, pageName: null);
-    print(path.getPageName);
-    print(path.hasEventId);
-    print(path.eventId);
+      _selectedEvent =
+          PageState(eventId: null, pageName: null, isUnknown: false);
+
     if ((path.hasEventId) && (path.getPageName == 'event')) {
-      _selectedEvent = PageState(eventId: path.eventId, pageName: 'event');
+      _selectedEvent =
+          PageState(eventId: path.eventId, pageName: 'event', isUnknown: false);
     } else if ((path.hasEventId) && (path.getPageName == 'guest')) {
-      _selectedEvent = PageState(eventId: path.eventId, pageName: 'guest');
+      _selectedEvent =
+          PageState(eventId: path.eventId, pageName: 'guest', isUnknown: false);
     } else
       _selectedEvent = null;
     show404 = false;
+
     print('show404 false');
     print(_selectedEvent.eventId);
     print(_selectedEvent.pageName);
@@ -147,16 +152,21 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
 
 class DetailsPage extends Page {
   final eventId;
+  final onTapped;
 
   DetailsPage({
     this.eventId,
+    this.onTapped,
   }) : super(key: ValueKey(eventId));
 
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
-        return DetailsScreen(eventId: eventId);
+        return DetailsScreen(
+          eventId: eventId,
+          onTapped: onTapped,
+        );
       },
     );
   }
@@ -229,14 +239,14 @@ class EventRouteInformationParser
   }
 }
 
-class UnknownScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Text('404!'),
-      ),
-    );
-  }
-}
+// class UnknownScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(),
+//       body: Center(
+//         child: Text('404!'),
+//       ),
+//     );
+//   }
+// }

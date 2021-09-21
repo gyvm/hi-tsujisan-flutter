@@ -63,7 +63,7 @@ createEvent(
           pageName: 'event'),
     );
   } else {
-    throw Exception('Failed to create event.');
+    throw Exception('イベントの作成に失敗しました。ページをリロードしてください。');
   }
 }
 

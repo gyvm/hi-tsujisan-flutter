@@ -14,6 +14,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import '../page_state.dart';
+
 // イベント情報の取得
 class EventData {
   String name;
@@ -43,7 +45,8 @@ class EventData {
 }
 
 // イベント情報の取得
-Future<EventData> getEvent({String url}) async {
+Future<EventData> getEvent(
+    {String url, ValueChanged<PageState> onTapped}) async {
   String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
 
@@ -52,14 +55,17 @@ Future<EventData> getEvent({String url}) async {
   if (response.statusCode == 200) {
     return EventData.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to get event etails.');
+    // throw Exception('Failed to get event etails.');
+    onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
   }
 }
 
 class DetailsScreen extends StatefulWidget {
   // static const routeName = '/event';
   final String eventId;
-  DetailsScreen({Key key, @required this.eventId}) : super(key: key);
+  final ValueChanged<PageState> onTapped;
+  DetailsScreen({Key key, @required this.eventId, @required this.onTapped})
+      : super(key: key);
 
   @override
   _DetailsScreenState createState() => _DetailsScreenState();
@@ -72,7 +78,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void initState() {
     super.initState();
     // イベント情報の取得
-    _futureEventData = getEvent(url: widget.eventId);
+    _futureEventData = getEvent(url: widget.eventId, onTapped: widget.onTapped);
     print(_futureEventData);
     print("initState");
   }

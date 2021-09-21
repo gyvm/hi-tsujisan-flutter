@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/guest_screen/possible_dates_table.dart';
+import '../widgets/guest_screen/guest_possible_dates_table.dart';
 import '../widgets/guest_screen/nickname_form.dart';
-import '../widgets/guest_screen/guests_submit_button.dart';
+import '../widgets/guest_screen/guest_submit_button.dart';
 
 import '../common/hexcolor.dart';
 
@@ -38,14 +38,16 @@ class EventData {
 }
 
 // イベント情報の取得
-Future<EventData> getEvent({String url}) async {
+Future<EventData> getEvent(
+    {String url, ValueChanged<PageState> onTapped}) async {
   String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
 
   if (response.statusCode == 200) {
     return EventData.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to create Event.');
+    // throw Exception('Failed to create Event.');
+    onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
   }
 }
 
@@ -67,7 +69,7 @@ class _GuestScreenState extends State<GuestScreen> {
   void initState() {
     super.initState();
     // イベント情報の取得
-    _futureEventData = getEvent(url: widget.eventId);
+    _futureEventData = getEvent(url: widget.eventId, onTapped: widget.onTapped);
     print(_futureEventData);
     print("initState");
   }
@@ -134,16 +136,16 @@ class _GuestScreenState extends State<GuestScreen> {
           );
         }
         return Container(
-            color: HexColor('#EFE2DB'),
-            child: Center(
-              child: SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(HexColor('#8A5C46')))),
-            ),
-          );
+          color: HexColor('#EFE2DB'),
+          child: Center(
+            child: SizedBox(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(HexColor('#8A5C46')))),
+          ),
+        );
       },
     );
   }
