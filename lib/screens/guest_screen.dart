@@ -133,7 +133,17 @@ class _GuestScreenState extends State<GuestScreen> {
             ),
           );
         }
-        return const CircularProgressIndicator();
+        return Container(
+            color: HexColor('#EFE2DB'),
+            child: Center(
+              child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(HexColor('#8A5C46')))),
+            ),
+          );
       },
     );
   }
