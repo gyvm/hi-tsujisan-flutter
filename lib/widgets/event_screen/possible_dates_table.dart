@@ -1,5 +1,7 @@
 // import 'dart:ffi';
 
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import '../../common/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -18,53 +20,13 @@ class PossibleDatesTable extends StatelessWidget {
   final Map<dynamic, dynamic> dateRate;
   // List<Map<String, dynamic>>? guestData;
 
+  int tableWidth = 720;
+
   @override
   Widget build(BuildContext context) {
-    // Map<String, int> markedPossibleDates = {
-    //   "2021-06-02": 1,
-    //   "2021-06-09": 0,
-    //   "2021-06-16": 0,
-    // };
-
-    // guest[{id:1,possibletable:[{},{}]}]
-    // guest[i][possibletable][1]
-
-    print(possibleDates);
-    print(guestData);
-
-    // List<Map<String, dynamic>> guestData = [
-    //   {
-    //     "nickname": "dsews",
-    //     "comment": "xwewcesdvscwec",
-    //     "possible_dates": {"2021-06-02": 1, "2021-06-09": 1, "2021-06-16": 2},
-    //   },
-    //   {
-    //     "nickname": "dsasdews",
-    //     "comment": "xwewcescsdvcsdcwec",
-    //     "possible_dates": {"2021-06-02": 1, "2021-06-09": 2, "2021-06-16": 3},
-    //   },
-    //   {
-    //     "nickname": "dscdews",
-    //     "comment": "xwewcecweczxecwec",
-    //     "possible_dates": {"2021-06-02": 1, "2021-06-09": 3, "2021-06-16": 2},
-    //   },
-    //   {
-    //     "nickname": "adsdsews",
-    //     "comment": "xwewcescs sv rsfvdsdxcecwec",
-    //     "possible_dates": {"2021-06-02": 1, "2021-06-09": 1, "2021-06-16": 3},
-    //   }
-    // ];
-    // for (var key in markedPossibleDates.keys) {
-    //   print('$key');
-    //   print(markedPossibleDates['$key']);
-    //   List<int>? art = markedPossibleDates['$key'];
-    //   if (art[0] != 0) {
-    //     print(art[0].toString());
-    //   }
-    // }
-
-    // List<bool> selected =
-    //     List<bool>.generate(possibleDates.length, (int index) => false);
+    print('guestData.length: ' + guestData.length.toString());
+    print('dateRate: ');
+    print(dateRate);
 
     return Container(
       decoration: BoxDecoration(
@@ -109,30 +71,14 @@ class PossibleDatesTable extends StatelessWidget {
               ),
               for (int i = 0; i < guestData.length; i++)
                 DataColumn(
-                  label: Container(
-                      width: 68,
-                      child: Center(child: Text(guestData[i]['nickname']))),
-                ),
-              // DataColumn(
-              //   label: Container(
-              //       width: 68, child: Center(child: Text('testtest'))),
-              // ),
-              // DataColumn(
-              //   label: Container(
-              //       width: 68, child: Center(child: Text('testtest'))),
-              // ),
-              // DataColumn(
-              //   label: Container(
-              //       width: 68, child: Center(child: Text('testtest'))),
-              // ),
-              // DataColumn(
-              //   label: Container(
-              //       width: 68, child: Center(child: Text('testtest'))),
-              // ),
-
-              // DataColumn(
-              //   label: Center(child: Text('コメント')),
-              // ),
+                    label: Container(
+                        width: 68,
+                        child: Center(
+                            child: (guestData[i]['nickname'] != null) ||
+                                    (guestData[i]['nickname'] <= 0)
+                                ? Text(guestData[i]['nickname'])
+                                : Text('未入力')))),
+              _fillColumnMargin(guestData.length)
             ],
 
             rows: [
@@ -148,18 +94,22 @@ class PossibleDatesTable extends StatelessWidget {
                       ),
                     ),
                     // 参加可能人数
-                    (dateRate.containsKey(possibleDates[i]["id"]))
+                    (dateRate.containsKey(possibleDates[i]['id'].toString()))
                         ? DataCell(Center(
                             child: Text(
-                              dateRate[possibleDates[i]["id"]].toString() + '人',
-                              // style: TextStyle(fontWeight: FontWeight.bold),
+                              dateRate[possibleDates[i]['id'].toString()]
+                                      .toString() +
+                                  '人',
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ))
                         : DataCell(Text('0人')),
-                    // _getGuestStatus(i),
-                    DataCell(
-                      Container(child: Text('bbbbbbbb')),
-                    ),
+
+                    for (int j = 0; j < guestData.length; j++)
+                      // DataCell(Center(child: Text('GOOD'))),
+                      _getGuestStatus(i, j),
+
+                    _fillCellMargin(guestData.length)
                   ],
                 ),
               // 参加者ごとのコメント
@@ -167,11 +117,17 @@ class PossibleDatesTable extends StatelessWidget {
                 cells: <DataCell>[
                   DataCell(Text('コメント')),
                   DataCell(Text('')),
-                  for (int i = 0; i < guestData.length; i++)
+                  for (int j = 0; j < guestData.length; j++)
                     DataCell(
                       Container(
-                          width: 68, child: Text(guestData[i]['comment'])),
+                        width: 68,
+                        child: Center(
+                            child: (guestData[j]['comment'] != null)
+                                ? Text(guestData[j]['comment'])
+                                : Text('')),
+                      ),
                     ),
+                  _fillCellMargin(guestData.length)
                 ],
               ),
             ],
@@ -181,33 +137,15 @@ class PossibleDatesTable extends StatelessWidget {
     );
   }
 
-  // Widget _verticalDivider = const VerticalDivider(
-  //   color: Colors.black,
-  //   thickness: 1,
-  // );
-
-  DataCell _getGuestStatus(i) {
-    return DataCell(
-      Container(child: Text('bbbbbbbb')),
-    );
-    // List<Widget> list;
-    // for (int j = 0; j < guestData!.length; j++)
-    //                   // DataCell(Text(
-    //                   //     guestData[i]['possible_dates']['$key'].toString())),
-    //                   for (int k = 0; k < guestPossibleDates!.length; k++)
-    //                     (guestData![j]["id"] ==
-    //                             guestPossibleDates![k]["guest_id"])
-    //                         ? (possibleDates![i]["id"] ==
-    //                                 guestPossibleDates![k]["date"])
-    //                             ? DataCell(
-    //                                 Center(
-    //                                   child: _switchIcon(guestPossibleDates![k]
-    //                                           ['status']
-    //                                       .toString()),
-    //                                 ),
-    //                               )
-    //                             : continue;
-    //                         : continue;
+  DataCell _getGuestStatus(i, j) {
+    for (int k = 0; k < guestPossibleDates.length; k++) {
+      if ((possibleDates[i]['id'] == guestPossibleDates[k]['date']) &&
+          (guestData[j]['id'] == guestPossibleDates[k]['guest_id'])) {
+        return DataCell(Center(
+            child: _switchIcon(guestPossibleDates[k]['status'].toString())));
+      }
+    }
+    return DataCell(Center(child: Text('未入力')));
   }
 
   Widget _switchIcon(value) {
@@ -242,5 +180,24 @@ class PossibleDatesTable extends StatelessWidget {
       default:
         return Center();
     }
+  }
+
+  DataColumn _fillColumnMargin(value) {
+    var _margens = (tableWidth - 64 - 50) - ((guestData.length + 1) * 68);
+    print('_margens: ' + _margens.toString());
+    if (_margens > 0) {
+      return DataColumn(
+        label: Container(width: _margens.toDouble()),
+      );
+    }
+    return DataColumn(
+      label: Container(width: 0),
+    );
+  }
+
+  DataCell _fillCellMargin(value) {
+    return DataCell(
+      Container(),
+    );
   }
 }
