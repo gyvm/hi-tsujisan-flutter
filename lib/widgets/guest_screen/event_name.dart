@@ -1,9 +1,12 @@
+// Dart imports:
 import 'dart:html';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-import '../../page_state.dart';
+// Project imports:
 import '../../common/hexcolor.dart';
+import '../../page_state.dart';
 
 class EventName extends StatelessWidget {
   final String url;

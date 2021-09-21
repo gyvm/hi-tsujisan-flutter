@@ -1,13 +1,13 @@
-// Flutter imports:
+// Dart imports:
 import 'dart:html';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Project imports:
 import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
-
 import '../../page_state.dart';
 
 class EventInfo extends StatelessWidget {
