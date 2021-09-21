@@ -27,7 +27,13 @@ class CreateScreen extends StatelessWidget {
         appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text('👋🐑hi-tsuji-san'),
+            title: Text(
+              '👋🐑',
+              style: TextStyle(
+                fontSize: 32,
+                // color: HexColor('#8A5C46'),
+              ),
+            ),
             centerTitle: false,
             automaticallyImplyLeading: false),
         body: LayoutBuilder(
@@ -45,7 +51,10 @@ class CreateScreen extends StatelessWidget {
                     create: (context) => EventModel(),
                     child: Column(
                       children: [
-                        Onboarding(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 40, bottom: 40),
+                          child: Onboarding(),
+                        ),
                         EventInfoForm(),
                         CalendarContainer(),
                         SubmitButton(onTapped: onTapped),
