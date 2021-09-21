@@ -122,7 +122,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 appBar: AppBar(
                     elevation: 0,
                     backgroundColor: Colors.transparent,
-                    title: Text('👋🐑hi-tsuji-san'),
+                    title: Text(
+                      '👋🐑',
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
+                    ),
                     centerTitle: false,
                     automaticallyImplyLeading: false),
                 body: LayoutBuilder(

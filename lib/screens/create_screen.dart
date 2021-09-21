@@ -31,7 +31,6 @@ class CreateScreen extends StatelessWidget {
               '👋🐑',
               style: TextStyle(
                 fontSize: 32,
-                // color: HexColor('#8A5C46'),
               ),
             ),
             centerTitle: false,
