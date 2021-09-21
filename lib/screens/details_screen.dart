@@ -48,7 +48,7 @@ class EventData {
 // イベント情報の取得
 Future<EventData> getEvent(
     {String url, ValueChanged<PageState> onTapped}) async {
-  String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
+  String requestUrl = 'http://hi-tsujisan.com/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
   if (response.statusCode == 200) {
     return EventData.fromJson(jsonDecode(response.body));
