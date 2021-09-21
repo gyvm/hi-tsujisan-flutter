@@ -23,7 +23,7 @@ submitPossibleDates(
     @required Map<String, int> markedPossibleDates,
     @required onTapped}) async {
   final response = await http.post(
-    Uri.http('hi-tsujisan.com', '/api/v1/guests'),
+    Uri.https('hi-tsujisan.com', '/api/v1/guests'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
