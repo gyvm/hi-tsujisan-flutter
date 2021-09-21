@@ -1,10 +1,16 @@
 // import 'dart:ffi';
 
+// Dart imports:
 import 'dart:html';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
-import '../../common/hexcolor.dart';
+
+// Package imports:
 import 'package:intl/intl.dart';
+
+// Project imports:
+import '../../common/hexcolor.dart';
 
 class PossibleDatesTable extends StatelessWidget {
   PossibleDatesTable(

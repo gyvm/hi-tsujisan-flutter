@@ -1,19 +1,20 @@
-import 'dart:html';
-
-import 'package:flutter/material.dart';
-import 'package:hi_tsujisan_frontend/widgets/event_screen/event_info.dart';
-import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.dart';
-
-import '../common/hexcolor.dart';
-
-import '../common/h2text.dart';
-
-import '../main.dart';
-
-import 'package:http/http.dart' as http;
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
+import 'dart:html';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:http/http.dart' as http;
+
+// Project imports:
+import 'package:hi_tsujisan_frontend/widgets/event_screen/event_info.dart';
+import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.dart';
+import '../common/h2text.dart';
+import '../common/hexcolor.dart';
+import '../main.dart';
 import '../page_state.dart';
 
 // イベント情報の取得

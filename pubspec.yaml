@@ -33,13 +33,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
   http: ^0.13.0
-  url_strategy: ^0.2.0
+  # url_strategy: ^0.2.0
   provider: ^5.0.0
   google_fonts: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  import_sorter: ^4.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

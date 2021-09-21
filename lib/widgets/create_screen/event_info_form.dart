@@ -1,10 +1,14 @@
 // import 'dart:html';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
 
-import '../../common/hexcolor.dart';
+// Project imports:
 import '../../common/h2text.dart';
+import '../../common/hexcolor.dart';
 import '../../model/event_model.dart';
 
 class EventInfoForm extends StatelessWidget {

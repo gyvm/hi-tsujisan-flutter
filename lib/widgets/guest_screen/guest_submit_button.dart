@@ -1,16 +1,20 @@
-import 'package:flutter/material.dart';
-
-import 'package:http/http.dart' as http;
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:provider/provider.dart';
-import '../../model/guest_model.dart';
-import '../../common/hexcolor.dart';
-import '../../screens/details_screen.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+// Project imports:
+import '../../common/hexcolor.dart';
 import '../../main.dart';
+import '../../model/guest_model.dart';
 import '../../page_state.dart';
+import '../../screens/details_screen.dart';
 
 submitPossibleDates(
     {@required String url,

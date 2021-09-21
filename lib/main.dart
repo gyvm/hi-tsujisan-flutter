@@ -1,17 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:url_strategy/url_strategy.dart';
-import 'screens/create_screen.dart';
+
+// Package imports:
+import 'package:google_fonts/google_fonts.dart';
+
+// Project imports:
 import './screens/guest_screen.dart';
+import 'configure_web.dart';
+import 'event_route_path.dart';
+import 'page_state.dart';
+import 'screens/create_screen.dart';
 import 'screens/details_screen.dart';
 import 'screens/unkown_screen.dart';
 
-import 'package:google_fonts/google_fonts.dart';
-
-import 'event_route_path.dart';
-import 'page_state.dart';
-
 // import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
-import 'configure_web.dart';
 
 void main() {
   configureApp();

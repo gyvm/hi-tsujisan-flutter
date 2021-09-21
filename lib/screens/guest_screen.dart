@@ -1,22 +1,23 @@
-import 'package:flutter/material.dart';
-
-import '../widgets/guest_screen/guest_possible_dates_table.dart';
-import '../widgets/guest_screen/nickname_form.dart';
-import '../widgets/guest_screen/guest_submit_button.dart';
-
-import '../common/hexcolor.dart';
-
-import 'package:http/http.dart' as http;
+// Dart imports:
 import 'dart:async';
 import 'dart:convert';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import "package:intl/intl.dart";
-
-import '../main.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import '../model/guest_model.dart';
 
+// Project imports:
+import '../common/hexcolor.dart';
+import '../main.dart';
+import '../model/guest_model.dart';
 import '../page_state.dart';
+import '../widgets/guest_screen/guest_possible_dates_table.dart';
+import '../widgets/guest_screen/guest_submit_button.dart';
+import '../widgets/guest_screen/nickname_form.dart';
 
 // イベント情報の取得
 class EventData {

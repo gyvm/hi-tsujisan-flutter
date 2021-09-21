@@ -1,18 +1,25 @@
-import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
-import "package:intl/intl.dart";
-// import 'dart:async';
+// Dart imports:
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import "package:intl/intl.dart";
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+// Project imports:
 import '../../common/hexcolor.dart';
+import '../../main.dart';
 import '../../model/event_model.dart';
+import '../../page_state.dart';
 import '../../screens/details_screen.dart';
 
-import '../../main.dart';
+// import 'dart:async';
 
-import '../../page_state.dart';
+
+
 
 class EventResponse {
   final String status;

@@ -1,9 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
-
-import 'package:provider/provider.dart';
 import '../../model/guest_model.dart';
 
 class NicknameForm extends StatelessWidget {
