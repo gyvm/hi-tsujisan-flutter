@@ -19,6 +19,8 @@ import '../widgets/guest_screen/guest_possible_dates_table.dart';
 import '../widgets/guest_screen/guest_submit_button.dart';
 import '../widgets/guest_screen/nickname_form.dart';
 
+import '../widgets/guest_screen/event_name.dart';
+
 // イベント情報の取得
 class EventData {
   String name;
@@ -122,8 +124,10 @@ class _GuestScreenState extends State<GuestScreen> {
                           create: (context) => GuestModel(),
                           child: Column(
                             children: [
-                              Text(data.name),
-                              Text(widget.eventId),
+                              EventName(
+                                  url: widget.eventId,
+                                  eventName: data.name,
+                                  onTapped: widget.onTapped),
                               NicknameForm(),
                               PossibleDatesTable(
                                   possibleDates: data.possibleDates),
