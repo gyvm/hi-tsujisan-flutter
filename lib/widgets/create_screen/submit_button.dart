@@ -16,11 +16,6 @@ import '../../model/event_model.dart';
 import '../../page_state.dart';
 import '../../screens/details_screen.dart';
 
-// import 'dart:async';
-
-
-
-
 class EventResponse {
   final String status;
   final String url;
@@ -37,7 +32,7 @@ class EventResponse {
 
 createEvent(
     {BuildContext context,
-    String name,
+    @required String name,
     String description,
     @required List<DateTime> selectedDates,
     @required ValueChanged<PageState> onTapped}) async {
@@ -67,7 +62,8 @@ createEvent(
     onTapped(
       PageState(
           eventId: EventResponse.fromJson(jsonDecode(response.body)).url,
-          pageName: 'event'),
+          pageName: 'event',
+          isUnknown: false),
     );
   } else {
     throw Exception('イベントの作成に失敗しました。ページをリロードしてください。');

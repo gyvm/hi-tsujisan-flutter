@@ -18,9 +18,9 @@ import '../../screens/details_screen.dart';
 
 submitPossibleDates(
     {@required String url,
-    String nickname,
+    @required String nickname,
     String comment,
-    Map<String, int> markedPossibleDates,
+    @required Map<String, int> markedPossibleDates,
     @required onTapped}) async {
   final response = await http.post(
     Uri.http('localhost:3000', '/api/v1/guests'),
