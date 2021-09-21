@@ -36,7 +36,6 @@ createEvent(
     String description,
     @required List<DateTime> selectedDates,
     @required ValueChanged<PageState> onTapped}) async {
-  // print(selectedDates);
   List<String> possibleDates = [];
   for (int i = 0; i < selectedDates.length; i++) {
     possibleDates
@@ -58,7 +57,6 @@ createEvent(
   );
 
   if (response.statusCode == 200) {
-    print(jsonDecode(response.body));
     onTapped(
       PageState(
           eventId: EventResponse.fromJson(jsonDecode(response.body)).url,

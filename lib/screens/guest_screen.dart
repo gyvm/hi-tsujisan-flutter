@@ -30,7 +30,6 @@ class EventData {
   EventData({this.name, this.description, this.possibleDates});
 
   factory EventData.fromJson(Map<String, dynamic> json) {
-    print(json['possible_dates']);
     return EventData(
       name: json['event_info']['name'],
       description: json['event_info']['description'],
@@ -72,8 +71,6 @@ class _GuestScreenState extends State<GuestScreen> {
     super.initState();
     // イベント情報の取得
     _futureEventData = getEvent(url: widget.eventId, onTapped: widget.onTapped);
-    print(_futureEventData);
-    print("initState");
   }
 
   @override
@@ -87,12 +84,6 @@ class _GuestScreenState extends State<GuestScreen> {
         }
         if (snapshot.hasData) {
           var data = snapshot.data;
-          print(data.possibleDates);
-          print(data.possibleDates);
-          // var guest = context.read<GuestModel>();
-          // guest.url = widget.url;
-
-          // return Center(child: (a != null) ? Text(a.name) : Text('error'));
           return SafeArea(
             child: Scaffold(
               backgroundColor: HexColor('#EFE2DB'),

@@ -223,7 +223,6 @@ class _CalendarState extends State<Calendar> {
             ),
           ),
           onTap: () {
-            // print('${DateFormat('yyyy年M月d日').format(cacheDate)}が削除されました。');
             setState(
               () {
                 selectedDatesListForView.forEach((date) {
@@ -259,8 +258,6 @@ class _CalendarState extends State<Calendar> {
       onTap: (isBefore)
           ? null
           : () {
-              // print('${DateFormat('yyyy年M月d日').format(cacheDate)}が選択されました');
-              // selectedDate = cacheDate;
               setState(() {
                 selectedDatesListForView.add(cacheDate);
               });

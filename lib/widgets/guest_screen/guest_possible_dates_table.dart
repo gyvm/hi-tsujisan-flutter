@@ -23,15 +23,6 @@ class PossibleDatesTable extends StatefulWidget {
 
 class _PossibleDatesTableState extends State<PossibleDatesTable> {
   Map<String, int> markedPossibleDates = {};
-  // persons.forEach((person) => map[person.name] = person.age);
-
-  // List<bool> selected =
-  //     List<bool>.generate(widget.possibleDates.length, (int index) => false);
-
-  // void _selectbutton(String mapKey, int pickNum) {
-  //   markedPossibleDates[mapKey] = pickNum;
-  //   print(markedPossibleDates);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -161,23 +152,13 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
                     var guest = context.read<GuestModel>();
                     guest.markedPossibleDates[
                         widget.possibleDates[index]['id'].toString()] = 3;
-                    print("guest.markedPossibleDates:");
-                    print(guest.markedPossibleDates);
                   });
                 },
               ),
             ],
-            // selected: selected[index],
-            // onSelectChanged: (bool value) {
-            //   setState(() {
-            //     selected[index] = value;
-            //   });
-            // },
           ),
         ),
       ),
     );
   }
 }
-
-// (new) DataTable DataTable({Key? key, required List<DataColumn> columns, int? sortColumnIndex, bool sortAscending = true, void Function(bool?)? onSelectAll, Decoration? decoration, MaterialStateProperty<Color?>? dataRowColor, double? dataRowHeight, TextStyle? dataTextStyle, MaterialStateProperty<Color?>? headingRowColor, double? headingRowHeight, TextStyle? headingTextStyle, double? horizontalMargin, double? columnSpacing, bool showCheckboxColumn = true, bool showBottomBorder = false, double? dividerThickness, required List<DataRow> rows})

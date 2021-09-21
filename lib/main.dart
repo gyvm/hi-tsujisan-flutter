@@ -13,8 +13,6 @@ import 'screens/create_screen.dart';
 import 'screens/details_screen.dart';
 import 'screens/unkown_screen.dart';
 
-// import 'configure_nonweb.dart' if (dart.library.html) 'configure_web.dart';
-
 void main() {
   configureApp();
   runApp(MyApp());
@@ -67,16 +65,12 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
 
     if (_selectedEvent.isUnknown) return EventRoutePath.unknown();
 
-    print(_selectedEvent.pageName);
-    if (_selectedEvent.pageName == 'guest') {
-      print("_selectedEvent.pageName == 'guest'");
+    if (_selectedEvent.pageName == 'guest')
       return EventRoutePath.guestScreen(_selectedEvent.eventId);
-    }
-    if (_selectedEvent.pageName == 'event') {
-      print("_selectedEvent.pageName == 'event'");
+
+    if (_selectedEvent.pageName == 'event')
       return EventRoutePath.detailsScreen(_selectedEvent.eventId);
-    }
-    print('no match');
+
     return EventRoutePath.createScreen();
   }
 
@@ -145,9 +139,6 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
       _selectedEvent = null;
     show404 = false;
 
-    print('show404 false');
-    print(_selectedEvent.eventId);
-    print(_selectedEvent.pageName);
     return;
   }
 }
@@ -240,15 +231,3 @@ class EventRouteInformationParser
     return null;
   }
 }
-
-// class UnknownScreen extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: Center(
-//         child: Text('404!'),
-//       ),
-//     );
-//   }
-// }

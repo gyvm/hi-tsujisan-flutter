@@ -30,10 +30,6 @@ class PossibleDatesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('guestData.length: ' + guestData.length.toString());
-    print('dateRate: ');
-    print(dateRate);
-
     return Container(
       decoration: BoxDecoration(
         // color: Colors.transparent,
@@ -112,7 +108,6 @@ class PossibleDatesTable extends StatelessWidget {
                         : DataCell(Text('0人')),
 
                     for (int j = 0; j < guestData.length; j++)
-                      // DataCell(Center(child: Text('GOOD'))),
                       _getGuestStatus(i, j),
 
                     _fillCellMargin(guestData.length)
@@ -189,8 +184,7 @@ class PossibleDatesTable extends StatelessWidget {
   }
 
   DataColumn _fillColumnMargin(value) {
-    var _margens = (tableWidth - 64 - 50) - ((guestData.length + 1) * 68);
-    print('_margens: ' + _margens.toString());
+    var _margens = (tableWidth - 64 - 50 - 10) - ((guestData.length + 1) * 68);
     if (_margens > 0) {
       return DataColumn(
         label: Container(width: _margens.toDouble()),

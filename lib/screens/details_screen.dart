@@ -50,9 +50,6 @@ Future<EventData> getEvent(
     {String url, ValueChanged<PageState> onTapped}) async {
   String requestUrl = 'http://localhost:3000/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
-
-  print(response.statusCode);
-
   if (response.statusCode == 200) {
     return EventData.fromJson(jsonDecode(response.body));
   } else {
@@ -80,27 +77,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
     super.initState();
     // イベント情報の取得
     _futureEventData = getEvent(url: widget.eventId, onTapped: widget.onTapped);
-    print(_futureEventData);
-    print("initState");
   }
-
-  // var eventurl;
-  // final eventurl = '8epa4z3CCz1631138517';
 
   @override
   Widget build(BuildContext context) {
-    // if (ModalRoute.of(context)!.settings.arguments as EventScreenArguments !=
-    //     null) {
-    //   final args =
-    //       ModalRoute.of(context)!.settings.arguments as EventScreenArguments;
-    //   eventurl = args.url;
-    // } else {
-    //   final eventurl = '8epa4z3CCz1631138517';
-    // }
-    print('eventId : ');
-    print(widget.eventId);
-
-    // _futureEventData = getEvent(context: context, url: widget.eventId);
     return FutureBuilder<EventData>(
         future: _futureEventData,
         builder: (context, snapshot) {
@@ -109,13 +89,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
           }
           if (snapshot.hasData) {
             var data = snapshot.data;
-            print(data.name);
-            print(data.description);
-            print(data.guestData);
-            print(data.guestPossibleDates);
-            // print(data.possibleDates);
-            // var guest = context.read<GuestModel>();
-            // guest.url = widget.url;
             return SafeArea(
               child: Scaffold(
                 backgroundColor: HexColor('#EFE2DB'),

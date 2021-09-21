@@ -37,9 +37,7 @@ submitPossibleDates(
     }),
   );
 
-  print(response.statusCode);
   if (response.statusCode == 200) {
-    print(jsonDecode(response.body));
     onTapped(
       PageState(eventId: url, pageName: 'event', isUnknown: false),
     );
