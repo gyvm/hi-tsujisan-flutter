@@ -26,16 +26,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _routerDelegate = EventRouterDelegate();
   final _routeInformationParser = EventRouteInformationParser();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Hitsujisan',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.kosugiMaruTextTheme(
+        textTheme: GoogleFonts.notoSansTextTheme(
           Theme.of(context).textTheme,
         ),
+        // fontFamily: "NotoSansJP",
       ),
       routerDelegate: _routerDelegate,
       routeInformationParser: _routeInformationParser,
