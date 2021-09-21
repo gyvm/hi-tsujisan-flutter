@@ -43,7 +43,7 @@ createEvent(
   }
 
   final response = await http.post(
-    Uri.http('localhost:3000', '/api/v1/events'),
+    Uri.http('hi-tsujisan.com', '/api/v1/events'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
