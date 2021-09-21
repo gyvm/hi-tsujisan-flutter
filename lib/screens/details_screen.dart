@@ -152,7 +152,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   EventInfo(
                                       url: widget.eventId,
                                       eventName: data.name,
-                                      eventDescription: data.description),
+                                      eventDescription: data.description,
+                                      onTapped: widget.onTapped),
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 20),
                                   child: H2Text(text: '出欠表'),

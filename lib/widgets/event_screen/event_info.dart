@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,15 +8,19 @@ import 'package:flutter/services.dart';
 import '../../common/h2text.dart';
 import '../../common/hexcolor.dart';
 
+import '../../page_state.dart';
+
 class EventInfo extends StatelessWidget {
   final String url;
   final String eventName;
   final String eventDescription;
+  final ValueChanged<PageState> onTapped;
 
   EventInfo({
     this.url,
     this.eventName = '未入力',
     this.eventDescription = 'a',
+    @required this.onTapped,
   }) : super();
 
   @override
@@ -24,14 +30,20 @@ class EventInfo extends StatelessWidget {
         child: Column(
       children: [
         Padding(
-            padding: const EdgeInsets.only(bottom: 40),
+            padding: const EdgeInsets.only(top: 40, bottom: 70),
             child: Column(children: [
-              Text('イベントURLを共有して、出欠表を作りましょう'),
+              Text(
+                'イベントURLを共有して、出欠表を作りましょう',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 IconButton(
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.content_copy_outlined,
                     size: 20,
+                    color: HexColor('#8A5C46'),
                   ),
                   tooltip: 'コピーする',
                   onPressed: () {
@@ -39,11 +51,30 @@ class EventInfo extends StatelessWidget {
                   },
                 ),
                 //https://stackoverflow.com/questions/55885433/flutter-dart-how-to-add-copy-to-clipboard-on-tap-to-a-app
+
                 SelectableText(
                   sharedUrl,
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 16),
                 ),
               ]),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: InkWell(
+                  child: Text(
+                    '>> 予定入力はこちら',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: HexColor('#8A5C46'),
+                    ),
+                  ),
+                  onTap: () {
+                    onTapped(PageState(
+                        eventId: url, pageName: 'guest', isUnknown: false));
+                  },
+                ),
+              )
             ])),
         Padding(
           padding: const EdgeInsets.only(bottom: 20),
