@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hi_tsujisan_frontend/widgets/guest_screen/guests_submit_button.dart';
+import 'package:hi_tsujisan_frontend/widgets/guest_screen/guest_submit_button.dart';
 import 'package:provider/provider.dart';
 
 import '../common/hexcolor.dart';

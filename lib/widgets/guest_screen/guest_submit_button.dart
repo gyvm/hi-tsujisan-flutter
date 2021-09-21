@@ -37,10 +37,10 @@ submitPossibleDates(
   if (response.statusCode == 200) {
     print(jsonDecode(response.body));
     onTapped(
-      PageState(eventId: url, pageName: 'event'),
+      PageState(eventId: url, pageName: 'event', isUnknown: false),
     );
   } else {
-    throw Exception('Failed to add guestdata.');
+    throw Exception('データの登録に失敗しました。ページをリロードしてください。');
   }
 }
 
