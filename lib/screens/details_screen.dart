@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:hi_tsujisan_frontend/widgets/event_screen/event_info.dart';
 import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.dart';
@@ -161,7 +163,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             );
           }
-          return const CircularProgressIndicator();
+          return Container(
+            color: HexColor('#EFE2DB'),
+            child: Center(
+              child: SizedBox(
+                  height: 100,
+                  width: 100,
+                  child: CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(HexColor('#8A5C46')))),
+            ),
+          );
         });
   }
 }
