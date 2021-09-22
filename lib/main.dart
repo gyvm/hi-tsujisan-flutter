@@ -33,10 +33,10 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.notoSansTextTheme(
-          Theme.of(context).textTheme,
-        ),
-        // fontFamily: "NotoSansJP",
+        // textTheme: GoogleFonts.notoSansTextTheme(
+        //   Theme.of(context).textTheme,
+        // ),
+        fontFamily: "NotoSansJP",
       ),
       routerDelegate: _routerDelegate,
       routeInformationParser: _routeInformationParser,
