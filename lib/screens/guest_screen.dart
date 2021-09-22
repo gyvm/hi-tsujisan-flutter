@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import "package:intl/intl.dart";
 import 'package:http/http.dart' as http;
+import 'package:http_retry/http_retry.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -44,11 +45,22 @@ Future<EventData> getEvent(
   String requestUrl = 'https://hi-tsujisan.com/api/v1/events/' + url;
   final response = await http.get(Uri.parse(requestUrl));
 
+  final client = RetryClient(http.Client(),
+      retries: 5,
+      when: (response) => (response.statusCode == 502),
+      whenError: (dynamic error, StackTrace stackTrace) {
+        print(stackTrace);
+        return true;
+      },
+      onRetry: (http.BaseRequest request, http.BaseResponse response,
+              int retryCount) =>
+          print("retry!"));
+
   if (response.statusCode == 200) {
     return EventData.fromJson(jsonDecode(response.body));
   } else {
     // throw Exception('Failed to create Event.');
-    await new Future.delayed(Duration(seconds: 2));
+    // await new Future.delayed(Duration(seconds: 2));
     onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
   }
 }
