@@ -38,6 +38,7 @@ dependencies:
   # url_strategy: ^0.2.0
   provider: ^5.0.0
   google_fonts: ^2.1.0
+  http_retry:
 
 dev_dependencies:
   flutter_test:
@@ -72,15 +73,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
   # - family: KosugiMaru
   #   fonts:
   #     - asset: google_fonts/NotoSansJP-Regular.ttf
-  # - family: NotoSansJP
-  #   fonts:
-  #     - asset: google_fonts/NotoSansJP-Regular.otf
-  #     - asset: google_fonts/NotoSansJP-Bold.otf
-  #       weight: 700
+  - family: NotoSansJP
+    fonts:
+      - asset: google_fonts/NotoSansJP-Regular.otf
+      - asset: google_fonts/NotoSansJP-Bold.otf
+        weight: 700
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf

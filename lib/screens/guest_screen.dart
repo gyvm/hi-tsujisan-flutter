@@ -48,6 +48,7 @@ Future<EventData> getEvent(
     return EventData.fromJson(jsonDecode(response.body));
   } else {
     // throw Exception('Failed to create Event.');
+    await new Future.delayed(Duration(seconds: 2));
     onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
   }
 }

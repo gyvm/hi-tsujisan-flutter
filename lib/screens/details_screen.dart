@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:http/http.dart' as http;
+import 'package:http_retry/http_retry.dart';
 
 // Project imports:
 import 'package:hi_tsujisan_frontend/widgets/event_screen/event_info.dart';
@@ -16,6 +17,8 @@ import '../common/h2text.dart';
 import '../common/hexcolor.dart';
 import '../main.dart';
 import '../page_state.dart';
+
+import '';
 
 // イベント情報の取得
 class EventData {
@@ -49,12 +52,28 @@ class EventData {
 Future<EventData> getEvent(
     {String url, ValueChanged<PageState> onTapped}) async {
   String requestUrl = 'https://hi-tsujisan.com/api/v1/events/' + url;
-  final response = await http.get(Uri.parse(requestUrl));
-  if (response.statusCode == 200) {
-    return EventData.fromJson(jsonDecode(response.body));
-  } else {
-    // throw Exception('Failed to get event etails.');
-    onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
+  final client = RetryClient(http.Client(),
+      retries: 5,
+      when: (response) =>
+          ((response.statusCode == 502) || (response.statusCode == 503)),
+      whenError: (dynamic error, StackTrace stackTrace) {
+        print(stackTrace);
+        return true;
+      },
+      onRetry: (http.BaseRequest request, http.BaseResponse response,
+              int retryCount) =>
+          print("retry!"));
+
+  final response = await client.get(Uri.parse(requestUrl));
+  try {
+    if (response.statusCode == 200) {
+      return EventData.fromJson(jsonDecode(response.body));
+    } else {
+      // throw Exception('Failed to get event etails.');
+      onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
+    }
+  } finally {
+    client.close();
   }
 }
 
