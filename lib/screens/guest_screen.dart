@@ -8,12 +8,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import "package:intl/intl.dart";
 import 'package:http/http.dart' as http;
-// import 'package:http_retry/http_retry.dart';
+import 'package:http_retry/http_retry.dart';
 import 'package:provider/provider.dart';
-import 'package:retry/retry.dart';
-
-import 'dart:async';
-import 'dart:io';
 
 // Project imports:
 import '../common/hexcolor.dart';
@@ -46,18 +42,29 @@ class EventData {
 // イベント情報の取得
 Future<EventData> getEvent(
     {String url, ValueChanged<PageState> onTapped}) async {
-  // final client = HttpClient();
-
   String requestUrl = 'https://hi-tsujisan.com/api/v1/events/' + url;
+  final client = RetryClient(http.Client(),
+      retries: 5,
+      when: (response) =>
+          ((response.statusCode == 502) || (response.statusCode == 503)),
+      whenError: (dynamic error, StackTrace stackTrace) {
+        print(stackTrace);
+        return true;
+      },
+      onRetry: (http.BaseRequest request, http.BaseResponse response,
+              int retryCount) =>
+          print("retry!"));
 
-  final response = await retry(
-      () => http.get(Uri.parse(requestUrl)).timeout(Duration(seconds: 5)),
-      retryIf: (e) => e != null);
-
-  if (response.statusCode == 200) {
-    return EventData.fromJson(jsonDecode(response.body));
-  } else {
-    onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
+  final response = await client.get(Uri.parse(requestUrl));
+  try {
+    if (response.statusCode == 200) {
+      return EventData.fromJson(jsonDecode(response.body));
+    } else {
+      // throw Exception('Failed to get guest etails.');
+      onTapped(PageState(eventId: null, pageName: null, isUnknown: true));
+    }
+  } finally {
+    client.close();
   }
 }
 
@@ -84,7 +91,7 @@ class _GuestScreenState extends State<GuestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('this is guest screen');
+    print('guest screen (v0.1)');
     return FutureBuilder<EventData>(
       future: _futureEventData,
       builder: (context, snapshot) {

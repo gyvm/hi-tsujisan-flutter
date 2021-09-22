@@ -21,6 +21,7 @@ class CreateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('create screen (v0.1)');
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor('#EFE2DB'),
