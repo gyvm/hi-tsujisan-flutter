@@ -28,6 +28,7 @@ class Onboarding extends StatelessWidget {
                           text: 'こんにちは👋これは日程調整の',
                           style: TextStyle(
                             fontSize: 20,
+                            color: Colors.black,
                           ),
                         ),
                         TextSpan(
@@ -42,6 +43,7 @@ class Onboarding extends StatelessWidget {
                           text: 'アプリです',
                           style: TextStyle(
                             fontSize: 20,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -64,6 +66,7 @@ class Onboarding extends StatelessWidget {
                           text: 'ステップでかんたんに予定を立てましょう',
                           style: TextStyle(
                             fontSize: 20,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -117,6 +120,7 @@ class OnboardingText extends StatelessWidget {
                 text: text2,
                 style: TextStyle(
                   fontSize: 16,
+                  color: Colors.black,
                 ),
               ),
             ],
