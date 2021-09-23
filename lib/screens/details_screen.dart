@@ -100,6 +100,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('event screen (v0.1)');
     return FutureBuilder<EventData>(
         future: _futureEventData,
         builder: (context, snapshot) {
