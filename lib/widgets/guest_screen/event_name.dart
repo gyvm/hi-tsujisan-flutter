@@ -29,6 +29,7 @@ class EventName extends StatelessWidget {
                 text: 'イベント',
                 style: TextStyle(
                   fontSize: 22,
+                  color: Colors.black,
                 ),
               ),
               TextSpan(
@@ -43,6 +44,7 @@ class EventName extends StatelessWidget {
                 text: 'の予定を入力してください！',
                 style: TextStyle(
                   fontSize: 22,
+                  color: Colors.black,
                 ),
               ),
             ],
