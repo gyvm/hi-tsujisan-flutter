@@ -1,0 +1,45 @@
+name: Flutter_Web_Deploy_To_STG
+
+on:
+ push:
+   branches:
+   - stg
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        channel: 'beta'
+
+    - name: Install
+      run: |
+        flutter config --enable-web
+        flutter pub get
+
+    - name: Build
+      run: flutter build web
+
+    - name: Sync s3
+      uses: jakejarvis/s3-sync-action@master
+      with:
+        args: --acl public-read --follow-symlinks --delete
+      env:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_STG }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'ap-northeast-1'
+        SOURCE_DIR: './build/web'
+    
+    - name: Invalidate CloudFront
+      uses: chetan/invalidate-cloudfront-action@master
+      env:
+        DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
+        PATHS: '/stg/*'
+        AWS_REGION: 'ap-northeast-1'
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
