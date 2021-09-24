@@ -22,6 +22,10 @@ submitPossibleDates(
     String comment,
     @required Map<String, int> markedPossibleDates,
     @required onTapped}) async {
+  if (nickname == null) {
+    nickname = '(未入力)';
+  }
+
   final response = await http.post(
     Uri.https('hi-tsujisan.com', '/api/v1/guests'),
     headers: <String, String>{
@@ -88,12 +92,14 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
                 primary: HexColor('#8A5C46'),
               ),
               onPressed: () {
-                submitPossibleDates(
-                    url: widget.url,
-                    nickname: guest.nickname,
-                    comment: guest.comment,
-                    markedPossibleDates: guest.markedPossibleDates,
-                    onTapped: widget.onTapped);
+                if (guest.markedPossibleDates != null) {
+                  submitPossibleDates(
+                      url: widget.url,
+                      nickname: guest.nickname,
+                      comment: guest.comment,
+                      markedPossibleDates: guest.markedPossibleDates,
+                      onTapped: widget.onTapped);
+                }
               },
             ),
           ),

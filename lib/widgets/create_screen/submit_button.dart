@@ -38,6 +38,10 @@ createEvent(
     @required ValueChanged<PageState> onTapped}) async {
   List<String> possibleDates = [];
 
+  if (name == null) {
+    name = '(未設定)';
+  }
+
   DateFormat format = DateFormat('yyyy-MM-dd');
   for (int i = 0; i < selectedDates.length; i++) {
     possibleDates.add(format.format(selectedDates[i]).toString());
@@ -104,12 +108,15 @@ class _SubmitButtonState extends State<SubmitButton> {
                   primary: HexColor('#8A5C46'),
                 ),
                 onPressed: () {
-                  createEvent(
-                      context: context,
-                      name: event.eventName,
-                      description: event.eventDescription,
-                      selectedDates: event.selectedDates,
-                      onTapped: widget.onTapped);
+                  if ((event.eventName != null) ||
+                      (event.selectedDates != null)) {
+                    createEvent(
+                        context: context,
+                        name: event.eventName,
+                        description: event.eventDescription,
+                        selectedDates: event.selectedDates,
+                        onTapped: widget.onTapped);
+                  }
                 },
               ),
             ),
