@@ -37,10 +37,12 @@ createEvent(
     @required List<DateTime> selectedDates,
     @required ValueChanged<PageState> onTapped}) async {
   List<String> possibleDates = [];
+
+  DateFormat format = DateFormat('yyyy-MM-dd');
   for (int i = 0; i < selectedDates.length; i++) {
-    possibleDates
-        .add(DateFormat('yyyy-MM-dd').format(selectedDates[i]).toString());
+    possibleDates.add(format.format(selectedDates[i]).toString());
   }
+  possibleDates.sort((a, b) => a.compareTo(b));
 
   final response = await http.post(
     Uri.https('hi-tsujisan.com', '/api/v1/events'),
