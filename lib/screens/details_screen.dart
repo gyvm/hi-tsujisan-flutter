@@ -18,7 +18,7 @@ import '../common/hexcolor.dart';
 import '../main.dart';
 import '../page_state.dart';
 
-import '';
+import '../widgets/small_screen_alart.dart';
 
 // イベント情報の取得
 class EventData {
@@ -101,6 +101,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
     print('event screen (v0.1)');
+    final Size size = MediaQuery.of(context).size;
     return FutureBuilder<EventData>(
         future: _futureEventData,
         builder: (context, snapshot) {
@@ -140,7 +141,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 left: 32, bottom: 0, top: 0, right: 32),
                             child: Column(
                               children: [
-                                // Text(widget.url),
+                                size.width.toInt() < 480
+                                    ? Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 20),
+                                        child: SmallScreenAlart())
+                                    : Container(),
                                 if (data != null)
                                   EventInfo(
                                       url: widget.eventId,
@@ -152,12 +158,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                   child: H2Text(text: '出欠表'),
                                 ),
                                 if (data != null)
-                                  PossibleDatesTable(
-                                      possibleDates: data.possibleDates,
-                                      guestData: data.guestData,
-                                      guestPossibleDates:
-                                          data.guestPossibleDates,
-                                      dateRate: data.dateRate),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 40),
+                                    child: PossibleDatesTable(
+                                        possibleDates: data.possibleDates,
+                                        guestData: data.guestData,
+                                        guestPossibleDates:
+                                            data.guestPossibleDates,
+                                        dateRate: data.dateRate),
+                                  ),
                               ],
                             ),
                           ),

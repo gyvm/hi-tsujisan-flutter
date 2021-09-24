@@ -7,11 +7,14 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../common/hexcolor.dart';
 
+import '../widgets/small_screen_alart.dart';
+
 class UnknownScreen extends StatelessWidget {
   const UnknownScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor('#EFE2DB'),
@@ -35,6 +38,11 @@ class UnknownScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                size.width.toInt() < 480
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: SmallScreenAlart())
+                    : Container(),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
