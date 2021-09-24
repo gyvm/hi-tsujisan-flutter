@@ -20,7 +20,7 @@ class PossibleDatesTable extends StatelessWidget {
       this.guestPossibleDates,
       this.dateRate})
       : super(key: key);
-  final List<dynamic> possibleDates;
+  List<dynamic> possibleDates;
   final List<dynamic> guestData;
   final List<dynamic> guestPossibleDates;
   final Map<dynamic, dynamic> dateRate;
@@ -30,6 +30,7 @@ class PossibleDatesTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    possibleDates.sort((a, b) => a['date'].compareTo(b['date']));
     return Container(
       decoration: BoxDecoration(
         // color: Colors.transparent,

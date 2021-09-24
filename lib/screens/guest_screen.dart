@@ -21,6 +21,8 @@ import '../widgets/guest_screen/guest_possible_dates_table.dart';
 import '../widgets/guest_screen/guest_submit_button.dart';
 import '../widgets/guest_screen/nickname_form.dart';
 
+import '../widgets/small_screen_alart.dart';
+
 // イベント情報の取得
 class EventData {
   String name;
@@ -92,6 +94,7 @@ class _GuestScreenState extends State<GuestScreen> {
   @override
   Widget build(BuildContext context) {
     print('guest screen (v0.1)');
+    final Size size = MediaQuery.of(context).size;
     return FutureBuilder<EventData>(
       future: _futureEventData,
       builder: (context, snapshot) {
@@ -130,6 +133,12 @@ class _GuestScreenState extends State<GuestScreen> {
                           create: (context) => GuestModel(),
                           child: Column(
                             children: [
+                              size.width.toInt() < 480
+                                  ? Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      child: SmallScreenAlart())
+                                  : Container(),
                               EventName(
                                   url: widget.eventId,
                                   eventName: data.name,

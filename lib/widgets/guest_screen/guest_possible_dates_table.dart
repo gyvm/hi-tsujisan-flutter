@@ -26,6 +26,7 @@ class _PossibleDatesTableState extends State<PossibleDatesTable> {
 
   @override
   Widget build(BuildContext context) {
+    widget.possibleDates.sort((a, b) => a['date'].compareTo(b['date']));
     return Padding(
       padding: const EdgeInsets.all(32),
       child: Container(

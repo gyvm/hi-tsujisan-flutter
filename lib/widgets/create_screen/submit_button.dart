@@ -37,10 +37,16 @@ createEvent(
     @required List<DateTime> selectedDates,
     @required ValueChanged<PageState> onTapped}) async {
   List<String> possibleDates = [];
-  for (int i = 0; i < selectedDates.length; i++) {
-    possibleDates
-        .add(DateFormat('yyyy-MM-dd').format(selectedDates[i]).toString());
+
+  if (name == null) {
+    name = '(未設定)';
   }
+
+  DateFormat format = DateFormat('yyyy-MM-dd');
+  for (int i = 0; i < selectedDates.length; i++) {
+    possibleDates.add(format.format(selectedDates[i]).toString());
+  }
+  possibleDates.sort((a, b) => a.compareTo(b));
 
   final response = await http.post(
     Uri.https('hi-tsujisan.com', '/api/v1/events'),
@@ -102,12 +108,15 @@ class _SubmitButtonState extends State<SubmitButton> {
                   primary: HexColor('#8A5C46'),
                 ),
                 onPressed: () {
-                  createEvent(
-                      context: context,
-                      name: event.eventName,
-                      description: event.eventDescription,
-                      selectedDates: event.selectedDates,
-                      onTapped: widget.onTapped);
+                  if ((event.eventName != null) ||
+                      (event.selectedDates != null)) {
+                    createEvent(
+                        context: context,
+                        name: event.eventName,
+                        description: event.eventDescription,
+                        selectedDates: event.selectedDates,
+                        onTapped: widget.onTapped);
+                  }
                 },
               ),
             ),
