@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:convert';
+import 'dart:html';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -37,10 +38,6 @@ createEvent(
     @required List<DateTime> selectedDates,
     @required ValueChanged<PageState> onTapped}) async {
   List<String> possibleDates = [];
-
-  if (name == null) {
-    name = '(未設定)';
-  }
 
   DateFormat format = DateFormat('yyyy-MM-dd');
   for (int i = 0; i < selectedDates.length; i++) {
@@ -83,6 +80,7 @@ class SubmitButton extends StatefulWidget {
 }
 
 class _SubmitButtonState extends State<SubmitButton> {
+  bool inputAlarm = false;
   @override
   Widget build(BuildContext context) {
     return Consumer<EventModel>(builder: (context, event, child) {
@@ -90,35 +88,57 @@ class _SubmitButtonState extends State<SubmitButton> {
         child: Container(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 30, top: 50),
-            child: SizedBox(
-              width: 250,
-              height: 50,
-              child: ElevatedButton(
-                child: Text(
-                  'イベントを作成する',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: HexColor('#F4EFED'),
+            child: Column(
+              children: [
+                if (inputAlarm)
+                  Text(
+                    'イベント名、候補日を入力してください。',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                    ),
                   ),
+                SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: ElevatedButton(
+                      child: Text(
+                        'イベントを作成する',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: HexColor('#F4EFED'),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: HexColor('#8A5C46'),
+                      ),
+                      onPressed: () {
+                        if ((event.eventName != null) ||
+                            (event.selectedDates != null)) {
+                          if ((event.eventName.length > 0) ||
+                              (event.selectedDates.length > 0)) {
+                            createEvent(
+                                context: context,
+                                name: event.eventName,
+                                description: event.eventDescription,
+                                selectedDates: event.selectedDates,
+                                onTapped: widget.onTapped);
+                          } else {
+                            setState(() {
+                              inputAlarm = true;
+                            });
+                          }
+                        } else {
+                          setState(() {
+                            inputAlarm = true;
+                          });
+                        }
+                      }),
                 ),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  primary: HexColor('#8A5C46'),
-                ),
-                onPressed: () {
-                  if ((event.eventName != null) ||
-                      (event.selectedDates != null)) {
-                    createEvent(
-                        context: context,
-                        name: event.eventName,
-                        description: event.eventDescription,
-                        selectedDates: event.selectedDates,
-                        onTapped: widget.onTapped);
-                  }
-                },
-              ),
+              ],
             ),
           ),
         ),

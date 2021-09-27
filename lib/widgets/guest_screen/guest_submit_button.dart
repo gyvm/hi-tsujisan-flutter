@@ -22,7 +22,11 @@ submitPossibleDates(
     String comment,
     @required Map<String, int> markedPossibleDates,
     @required onTapped}) async {
-  if (nickname == null) {
+  if (nickname != null) {
+    if (nickname.length < 0) {
+      nickname = '(未入力)';
+    }
+  } else if (nickname == null) {
     nickname = '(未入力)';
   }
 
@@ -74,34 +78,56 @@ class GuestsSubmitButton extends StatefulWidget {
 }
 
 class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
+  bool inputAlarm = false;
   @override
   Widget build(BuildContext context) {
     return Consumer<GuestModel>(builder: (context, guest, child) {
       return Container(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 30, top: 50),
-          child: SizedBox(
-            width: 250,
-            height: 50,
-            child: ElevatedButton(
-              child: Text('送信'),
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+          child: Column(
+            children: [
+              if (inputAlarm)
+                Text(
+                  'ニックネーム、出欠表を入力してください。',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.red,
+                  ),
                 ),
-                primary: HexColor('#8A5C46'),
+              SizedBox(
+                width: 250,
+                height: 50,
+                child: ElevatedButton(
+                    child: Text('送信'),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      primary: HexColor('#8A5C46'),
+                    ),
+                    onPressed: () {
+                      if (guest.markedPossibleDates != null) {
+                        if (guest.markedPossibleDates.length < 0) {
+                          submitPossibleDates(
+                              url: widget.url,
+                              nickname: guest.nickname,
+                              comment: guest.comment,
+                              markedPossibleDates: guest.markedPossibleDates,
+                              onTapped: widget.onTapped);
+                        } else {
+                          setState(() {
+                            inputAlarm = true;
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          inputAlarm = true;
+                        });
+                      }
+                    }),
               ),
-              onPressed: () {
-                if (guest.markedPossibleDates != null) {
-                  submitPossibleDates(
-                      url: widget.url,
-                      nickname: guest.nickname,
-                      comment: guest.comment,
-                      markedPossibleDates: guest.markedPossibleDates,
-                      onTapped: widget.onTapped);
-                }
-              },
-            ),
+            ],
           ),
         ),
       );
