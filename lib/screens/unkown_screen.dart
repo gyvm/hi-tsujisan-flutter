@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import '../common/hexcolor.dart';
-
+import '../page_state.dart';
 import '../widgets/small_screen_alart.dart';
 
 class UnknownScreen extends StatelessWidget {
-  const UnknownScreen({Key key}) : super(key: key);
+  final ValueChanged<PageState> onTapped;
+  const UnknownScreen({Key key, @required this.onTapped}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +22,17 @@ class UnknownScreen extends StatelessWidget {
         appBar: AppBar(
             elevation: 0,
             backgroundColor: Colors.transparent,
-            title: Text(
-              '👋🐑',
-              style: TextStyle(
-                fontSize: 32,
+            title: GestureDetector(
+              onTap: () {
+                onTapped(
+                  PageState(eventId: null, pageName: null, isUnknown: false),
+                );
+              },
+              child: Text(
+                '👋🐑',
+                style: TextStyle(
+                  fontSize: 32,
+                ),
               ),
             ),
             centerTitle: false,

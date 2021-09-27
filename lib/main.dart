@@ -90,7 +90,11 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
           ),
         ),
         if (show404)
-          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()),
+          MaterialPage(
+              key: ValueKey('UnknownPage'),
+              child: UnknownScreen(
+                onTapped: _handleNextScreen,
+              )),
         if (_selectedEvent?.pageName == 'guest')
           GuestPage(
             eventId: _selectedEvent.eventId,
