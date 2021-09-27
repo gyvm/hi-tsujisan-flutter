@@ -23,7 +23,7 @@ submitPossibleDates(
     @required Map<String, int> markedPossibleDates,
     @required onTapped}) async {
   if (nickname != null) {
-    if (nickname.length < 0) {
+    if (nickname.length <= 0) {
       nickname = '(未入力)';
     }
   } else if (nickname == null) {
@@ -78,7 +78,7 @@ class GuestsSubmitButton extends StatefulWidget {
 }
 
 class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
-  bool inputAlarm = false;
+  bool GuestInputAlarm = false;
   @override
   Widget build(BuildContext context) {
     return Consumer<GuestModel>(builder: (context, guest, child) {
@@ -87,7 +87,7 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
           padding: const EdgeInsets.only(bottom: 30, top: 50),
           child: Column(
             children: [
-              if (inputAlarm)
+              if (GuestInputAlarm)
                 Text(
                   'ニックネーム、出欠表を入力してください。',
                   style: TextStyle(
@@ -108,7 +108,7 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
                     ),
                     onPressed: () {
                       if (guest.markedPossibleDates != null) {
-                        if (guest.markedPossibleDates.length < 0) {
+                        if (guest.markedPossibleDates.length > 0) {
                           submitPossibleDates(
                               url: widget.url,
                               nickname: guest.nickname,
@@ -117,12 +117,12 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
                               onTapped: widget.onTapped);
                         } else {
                           setState(() {
-                            inputAlarm = true;
+                            GuestInputAlarm = true;
                           });
                         }
                       } else {
                         setState(() {
-                          inputAlarm = true;
+                          GuestInputAlarm = true;
                         });
                       }
                     }),
