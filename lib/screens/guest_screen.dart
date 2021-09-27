@@ -20,7 +20,6 @@ import '../widgets/guest_screen/event_name.dart';
 import '../widgets/guest_screen/guest_possible_dates_table.dart';
 import '../widgets/guest_screen/guest_submit_button.dart';
 import '../widgets/guest_screen/nickname_form.dart';
-
 import '../widgets/small_screen_alart.dart';
 
 // イベント情報の取得

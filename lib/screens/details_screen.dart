@@ -15,9 +15,7 @@ import 'package:hi_tsujisan_frontend/widgets/event_screen/event_info.dart';
 import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.dart';
 import '../common/h2text.dart';
 import '../common/hexcolor.dart';
-import '../main.dart';
 import '../page_state.dart';
-
 import '../widgets/small_screen_alart.dart';
 
 // イベント情報の取得
@@ -49,6 +47,7 @@ class EventData {
 }
 
 // イベント情報の取得
+// ignore: missing_return
 Future<EventData> getEvent(
     {String url, ValueChanged<PageState> onTapped}) async {
   String requestUrl = 'https://hi-tsujisan.com/api/v1/events/' + url;

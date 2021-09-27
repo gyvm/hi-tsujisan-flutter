@@ -13,7 +13,6 @@ import '../widgets/create_screen/event_info_form.dart';
 import '../widgets/create_screen/onboarding.dart';
 import '../widgets/create_screen/submit_button.dart';
 import '../widgets/guest_screen/guest_submit_button.dart';
-
 import '../widgets/small_screen_alart.dart';
 
 class CreateScreen extends StatelessWidget {
