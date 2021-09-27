@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
@@ -7,14 +6,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:http/http.dart' as http;
+import 'package:http_retry/http_retry.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../common/hexcolor.dart';
-import '../../main.dart';
 import '../../model/guest_model.dart';
 import '../../page_state.dart';
-import '../../screens/details_screen.dart';
 
 submitPossibleDates(
     {@required String url,
@@ -30,7 +28,19 @@ submitPossibleDates(
     nickname = '(未入力)';
   }
 
-  final response = await http.post(
+  final client = RetryClient(http.Client(),
+      retries: 5,
+      when: (response) =>
+          ((response.statusCode == 502) || (response.statusCode == 503)),
+      whenError: (dynamic error, StackTrace stackTrace) {
+        print(stackTrace);
+        return true;
+      },
+      onRetry: (http.BaseRequest request, http.BaseResponse response,
+              int retryCount) =>
+          print("retry!"));
+
+  final response = await client.post(
     Uri.https('hi-tsujisan.com', '/api/v1/guests'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -44,13 +54,17 @@ submitPossibleDates(
       }
     }),
   );
-
-  if (response.statusCode == 200) {
-    onTapped(
-      PageState(eventId: url, pageName: 'event', isUnknown: false),
-    );
-  } else {
-    throw Exception('データの登録に失敗したためページをリロードしてください');
+  try {
+    if (response.statusCode == 200) {
+      onTapped(
+        PageState(eventId: url, pageName: 'event', isUnknown: false),
+      );
+    } else {
+      onTapped(PageState(eventId: null, pageName: null, isUnknown: false));
+      throw Exception('データの登録に失敗したためページをリロードしてください');
+    }
+  } finally {
+    client.close();
   }
 }
 
