@@ -1,11 +1,11 @@
 {
-    "name": "hi_tsujisan_frontend",
-    "short_name": "hi_tsujisan_frontend",
+    "name": "hi_tsujisan",
+    "short_name": "hi_tsujisan",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "日程調整アプリ",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
