@@ -22,7 +22,7 @@ jobs:
         flutter pub get
 
     - name: Build
-      run: flutter build web
+      run: flutter build web --no-sound-null-safety --web-renderer html
 
     - name: Sync s3
       uses: jakejarvis/s3-sync-action@master
