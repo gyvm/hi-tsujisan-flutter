@@ -123,6 +123,7 @@ class PossibleDatesTable extends StatelessWidget {
                     DataCell(
                       Container(
                         width: 68,
+                        height: double.infinity,
                         child: Center(
                             child: (guestData[j]['comment'] != null)
                                 ? Text(guestData[j]['comment'])
