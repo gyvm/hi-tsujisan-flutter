@@ -109,10 +109,18 @@ class _GuestScreenState extends State<GuestScreen> {
               appBar: AppBar(
                   elevation: 0,
                   backgroundColor: Colors.transparent,
-                  title: Text(
-                    '👋🐑',
-                    style: TextStyle(
-                      fontSize: 32,
+                  title: GestureDetector(
+                    onTap: () {
+                      widget.onTapped(
+                        PageState(
+                            eventId: null, pageName: null, isUnknown: false),
+                      );
+                    },
+                    child: Text(
+                      '👋🐑',
+                      style: TextStyle(
+                        fontSize: 32,
+                      ),
                     ),
                   ),
                   centerTitle: false,

@@ -31,6 +31,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      title: 'hi-tsujisan',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         // textTheme: GoogleFonts.notoSansTextTheme(
@@ -90,7 +91,11 @@ class EventRouterDelegate extends RouterDelegate<EventRoutePath>
           ),
         ),
         if (show404)
-          MaterialPage(key: ValueKey('UnknownPage'), child: UnknownScreen()),
+          MaterialPage(
+              key: ValueKey('UnknownPage'),
+              child: UnknownScreen(
+                onTapped: _handleNextScreen,
+              )),
         if (_selectedEvent?.pageName == 'guest')
           GuestPage(
             eventId: _selectedEvent.eventId,
