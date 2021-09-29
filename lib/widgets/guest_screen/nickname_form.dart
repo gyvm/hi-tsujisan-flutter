@@ -94,9 +94,8 @@ class NicknameForm extends StatelessWidget {
               ),
               hintText: '''例)
 09日は17時以降なら可能です
-27日も調整できる。
 みんなに合わせます!!
-肉が食べたい''',
+肉が食べたいなー''',
             ),
             cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
