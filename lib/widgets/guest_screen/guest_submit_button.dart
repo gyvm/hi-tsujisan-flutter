@@ -92,6 +92,7 @@ class GuestsSubmitButton extends StatefulWidget {
 }
 
 class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
+  // ignore: non_constant_identifier_names
   bool GuestInputAlarm = false;
   @override
   Widget build(BuildContext context) {
@@ -113,7 +114,13 @@ class _GuestsSubmitButtonState extends State<GuestsSubmitButton> {
                 width: 250,
                 height: 50,
                 child: ElevatedButton(
-                    child: Text('送信'),
+                    child: Text(
+                      '送信',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: HexColor('#F4EFED'),
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

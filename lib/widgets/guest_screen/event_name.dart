@@ -54,10 +54,11 @@ class EventName extends StatelessWidget {
           padding: const EdgeInsets.only(top: 30),
           child: InkWell(
             child: Text(
-              '>> イベントの確認はこちら',
+              'イベントの確認はこちら',
               style: TextStyle(
                 decoration: TextDecoration.underline,
-                fontSize: 16,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
                 color: HexColor('#8A5C46'),
               ),
             ),

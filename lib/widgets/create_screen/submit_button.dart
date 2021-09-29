@@ -120,7 +120,7 @@ class _SubmitButtonState extends State<SubmitButton> {
                       child: Text(
                         'イベントを作成する',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           color: HexColor('#F4EFED'),
                         ),
                       ),
