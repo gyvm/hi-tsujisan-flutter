@@ -59,20 +59,27 @@ class EventInfo extends StatelessWidget {
               ]),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
-                child: InkWell(
-                  child: Text(
-                    '>> 予定入力はこちら',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: HexColor('#8A5C46'),
-                    ),
-                  ),
-                  onTap: () {
-                    onTapped(PageState(
-                        eventId: url, pageName: 'guest', isUnknown: false));
-                  },
+                child: SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: ElevatedButton(
+                      child: Text(
+                        '予定入力はこちら',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: HexColor('#F4EFED'),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        primary: HexColor('#8A5C46'),
+                      ),
+                      onPressed: () {
+                        onTapped(PageState(
+                            eventId: url, pageName: 'guest', isUnknown: false));
+                      }),
                 ),
               )
             ])),

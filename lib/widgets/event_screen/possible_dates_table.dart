@@ -64,7 +64,7 @@ class PossibleDatesTable extends StatelessWidget {
                   child: Container(
                     width: 10,
                     child: Icon(
-                      Icons.thumb_up_outlined,
+                      Icons.thumb_up,
                       color: HexColor('#8A5C46'),
                       size: 24.0,
                       semanticLabel: '参加可能',

@@ -52,7 +52,7 @@ class NicknameForm extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
               ),
-              hintText: "",
+              hintText: '例) 山田 / ささき / wada',
             ),
             cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
@@ -92,7 +92,10 @@ class NicknameForm extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
               ),
-              hintText: "例：○○は20時以降なら可能です",
+              hintText: '''例)
+09日は17時以降なら可能です
+みんなに合わせます!!
+肉が食べたいなー''',
             ),
             cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {

@@ -53,7 +53,7 @@ class EventInfoForm extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
               ),
-              hintText: "イベント名：",
+              hintText: "例) 山へ行こう / 飲み会しよう! / 読書会",
             ),
             cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
@@ -93,7 +93,10 @@ class EventInfoForm extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: HexColor('#8A5C46'), width: 2.0),
               ),
-              hintText: "補足事項：",
+              hintText: '''例)
+都合良い時間教えて！
+20時以降であればいつでもOK
+身分証明証必要！！''',
             ),
             cursorColor: HexColor('#8A5C46'),
             onChanged: (text) {
