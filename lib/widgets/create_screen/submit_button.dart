@@ -131,9 +131,9 @@ class _SubmitButtonState extends State<SubmitButton> {
                         primary: HexColor('#8A5C46'),
                       ),
                       onPressed: () {
-                        if ((event.eventName != null) ||
+                        if ((event.eventName != null) &&
                             (event.selectedDates != null)) {
-                          if ((event.eventName.length > 0) ||
+                          if ((event.eventName.length > 0) &&
                               (event.selectedDates.length > 0)) {
                             createEvent(
                                 context: context,
