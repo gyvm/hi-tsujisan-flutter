@@ -5,6 +5,7 @@ import 'dart:html';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:hi_tsujisan_frontend/widgets/event_screen/comments.dart';
 
 // Package imports:
 import 'package:http/http.dart' as http;
@@ -16,7 +17,7 @@ import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.d
 import '../common/h2text.dart';
 import '../common/hexcolor.dart';
 import '../page_state.dart';
-import '../widgets/small_screen_alart.dart';
+import '../widgets/small_screen_alert.dart';
 
 // イベント情報の取得
 class EventData {
@@ -152,7 +153,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ? Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 20),
-                                        child: SmallScreenAlart())
+                                        child: SmallScreenAlert())
                                     : Container(),
                                 if (data != null)
                                   EventInfo(

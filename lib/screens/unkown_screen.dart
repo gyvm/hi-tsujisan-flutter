@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../common/hexcolor.dart';
 import '../page_state.dart';
-import '../widgets/small_screen_alart.dart';
+import '../widgets/small_screen_alert.dart';
 
 class UnknownScreen extends StatelessWidget {
   final ValueChanged<PageState> onTapped;
@@ -49,7 +49,7 @@ class UnknownScreen extends StatelessWidget {
                 size.width.toInt() < 480
                     ? Padding(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: SmallScreenAlart())
+                        child: SmallScreenAlert())
                     : Container(),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
