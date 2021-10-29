@@ -11,12 +11,13 @@ import 'package:http/http.dart' as http;
 import 'package:http_retry/http_retry.dart';
 
 // Project imports:
-import 'package:hi_tsujisan_frontend/widgets/event_screen/event_info.dart';
-import 'package:hi_tsujisan_frontend/widgets/event_screen/possible_dates_table.dart';
+import 'package:hi_tsujisan_frontend/widgets/details_screen/comments.dart';
+import 'package:hi_tsujisan_frontend/widgets/details_screen/event_info.dart';
+import 'package:hi_tsujisan_frontend/widgets/details_screen/possible_dates_table.dart';
 import '../common/h2text.dart';
 import '../common/hexcolor.dart';
 import '../page_state.dart';
-import '../widgets/small_screen_alart.dart';
+import '../widgets/small_screen_alert.dart';
 
 // イベント情報の取得
 class EventData {
@@ -152,7 +153,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     ? Padding(
                                         padding:
                                             const EdgeInsets.only(bottom: 20),
-                                        child: SmallScreenAlart())
+                                        child: SmallScreenAlert())
                                     : Container(),
                                 if (data != null)
                                   EventInfo(
@@ -174,6 +175,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             data.guestPossibleDates,
                                         dateRate: data.dateRate),
                                   ),
+                                Comments(guestData: data.guestData),
                               ],
                             ),
                           ),

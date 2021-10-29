@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 // Project imports:
 import '../common/hexcolor.dart';
 
-class SmallScreenAlart extends StatelessWidget {
-  const SmallScreenAlart({Key key}) : super(key: key);
+class SmallScreenAlert extends StatelessWidget {
+  const SmallScreenAlert({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -20,7 +20,7 @@ import '../widgets/guest_screen/event_name.dart';
 import '../widgets/guest_screen/guest_possible_dates_table.dart';
 import '../widgets/guest_screen/guest_submit_button.dart';
 import '../widgets/guest_screen/nickname_form.dart';
-import '../widgets/small_screen_alart.dart';
+import '../widgets/small_screen_alert.dart';
 
 // イベント情報の取得
 class EventData {
@@ -144,7 +144,7 @@ class _GuestScreenState extends State<GuestScreen> {
                                   ? Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 20),
-                                      child: SmallScreenAlart())
+                                      child: SmallScreenAlert())
                                   : Container(),
                               EventName(
                                   url: widget.eventId,

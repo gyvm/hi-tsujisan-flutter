@@ -114,25 +114,6 @@ class PossibleDatesTable extends StatelessWidget {
                     _fillCellMargin(guestData.length)
                   ],
                 ),
-              // 参加者ごとのコメント
-              DataRow(
-                cells: <DataCell>[
-                  DataCell(Text('コメント')),
-                  DataCell(Text('')),
-                  for (int j = 0; j < guestData.length; j++)
-                    DataCell(
-                      Container(
-                        width: 68,
-                        height: double.infinity,
-                        child: Center(
-                            child: (guestData[j]['comment'] != null)
-                                ? Text(guestData[j]['comment'])
-                                : Text('')),
-                      ),
-                    ),
-                  _fillCellMargin(guestData.length)
-                ],
-              ),
             ],
           ),
         ),

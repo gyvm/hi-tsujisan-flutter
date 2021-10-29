@@ -13,7 +13,7 @@ import '../widgets/create_screen/event_info_form.dart';
 import '../widgets/create_screen/onboarding.dart';
 import '../widgets/create_screen/submit_button.dart';
 import '../widgets/guest_screen/guest_submit_button.dart';
-import '../widgets/small_screen_alart.dart';
+import '../widgets/small_screen_alert.dart';
 
 class CreateScreen extends StatelessWidget {
   // static const routeName = '/new';
@@ -56,7 +56,7 @@ class CreateScreen extends StatelessWidget {
                         size.width.toInt() < 480
                             ? Padding(
                                 padding: const EdgeInsets.only(bottom: 20),
-                                child: SmallScreenAlart())
+                                child: SmallScreenAlert())
                             : Container(),
                         Padding(
                           padding: const EdgeInsets.only(top: 40, bottom: 40),
