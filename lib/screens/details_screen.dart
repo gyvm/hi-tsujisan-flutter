@@ -5,13 +5,13 @@ import 'dart:html';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:hi_tsujisan_frontend/widgets/details_screen/comments.dart';
 
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:http_retry/http_retry.dart';
 
 // Project imports:
+import 'package:hi_tsujisan_frontend/widgets/details_screen/comments.dart';
 import 'package:hi_tsujisan_frontend/widgets/details_screen/event_info.dart';
 import 'package:hi_tsujisan_frontend/widgets/details_screen/possible_dates_table.dart';
 import '../common/h2text.dart';
@@ -175,6 +175,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             data.guestPossibleDates,
                                         dateRate: data.dateRate),
                                   ),
+                                Comments(guestData: data.guestData),
                               ],
                             ),
                           ),
