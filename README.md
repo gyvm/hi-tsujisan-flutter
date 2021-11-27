@@ -1,4 +1,4 @@
-# hi-tsujisan-flutte🐑
+# hi-tsujisan-flutter🐑
 - [hi-tsujisan.com](https://hi-tsujisan.com/)🐑は簡易的な日程調整の執事アプリです。
 - アカウントを必要としないため、各サービスをまたぎ様々な人と気軽な日程調整が可能です。
 - 会社の他部署間での日程調整や、学校のクラスでの行事など利用すると便利です。
